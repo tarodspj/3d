@@ -14,7 +14,6 @@ $('#wrapper').append(renderer.domElement);
 
 //$(window).resize(onWindowResize);
 
-
 function onWindowResize() {
   widthCanvas = window.innerWidth;
   heightCanvas = window.innerHeight;
@@ -42,7 +41,7 @@ for(var i = 0; i < 1000; ++i){
     var material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     material.opacity = 1;
   } else {
-    var material = new THREE.MeshLambertMaterial({color: 0xb2d7e5, envMaps: 'refraction'});
+    var material = new THREE.MeshLambertMaterial({color: 0xb2d7e5});
     material.opacity = 0.9;
     material.transparent = true;
   }
@@ -115,7 +114,6 @@ $('canvas').on('mousemove',function(e){
       cameraPosition = ((e.clientY) / cameraDamper);
 });
 
-window.onscroll = onScroll;
 //$(window).scroll(function(){
   // var $scrollTop = $(this).scrollTop();
   // camera.position.y = 3-($scrollTop / 300);
@@ -147,6 +145,7 @@ window.onresize = onWindowResize;
 
 $(document).ready(function() {
   render();
+  window.onscroll = onScroll;
 
   $('#burguer').on( 'click', function() { //show hide menu
     toggleMenu();
