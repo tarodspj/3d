@@ -95,10 +95,11 @@ function render() {
 function onScroll() {
   var $scrollTop = $(this).scrollTop();
   camera.position.y = 3-($scrollTop / 300);
-  if($scrollTop > (heightCanvas - 130)) { //para controlar que no este haciendo la locura si no la veo
+  if($scrollTop > (heightCanvas - 130) && animationJs != 0) { //para controlar que no este haciendo la locura si no la veo
     cancelAnimationFrame(animationJs);
     animationJs = 0;
-  } else if (animationJs === 0 && $scrollTop < (heightCanvas - 130)) { //volvemos a lanzar la locura si la estamos viendo
+    console.log('cancel animation');
+  } else if ($scrollTop < (heightCanvas - 130)) { //volvemos a lanzar la locura si la estamos viendo
     animationJs = requestAnimationFrame( render );
   }
 }
@@ -120,7 +121,8 @@ function toggleMenu() {
 
 function animaScroll(where) {
   var exampleDestination = document.querySelector('#' + where);
-  smoothScroll(exampleDestination);
+  smoothScroll(exampleDestination,500,toggleMenu);
+  //window.smoothScroll(target, duration, callback, context)
 
 }
 
@@ -128,6 +130,7 @@ window.onresize = onWindowResize;
 
 $(document).ready(function() {
   render();
+  window.onscroll = onScroll;
 
   $('#burguer').on( 'click', function() { //show hide menu
     toggleMenu();
