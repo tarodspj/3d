@@ -1,4 +1,7 @@
 var animationJs, widthCanvas, heightCanvas;
+
+// This function can easily be an onClick handler in React components
+
 var scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0xffffff, 0.13);
 
@@ -45,10 +48,6 @@ for(var i = 0; i < 1000; ++i){
     material.opacity = 0.9;
     material.transparent = true;
   }
-
-  //var colorToBox = '#'+(function lol(m,s,c){return s[m.floor(m.random() * s.length)] + (c && lol(m,s,c-1));})(Math,'05',4);
-
-  //var material = new THREE.MeshBasicMaterial({color: colorToBox});
 
   //material.opacity = 0.9;
   cube[i] = new THREE.Mesh( geometry, material );
@@ -114,38 +113,21 @@ $('canvas').on('mousemove',function(e){
       cameraPosition = ((e.clientY) / cameraDamper);
 });
 
-//$(window).scroll(function(){
-  // var $scrollTop = $(this).scrollTop();
-  // camera.position.y = 3-($scrollTop / 300);
-  // if($scrollTop > (heightCanvas - 130)) { //para controlar que no este haciendo la locura si no la veo
-  //   cancelAnimationFrame(animationJs);
-  //   animationJs = 0;
-  // } else if (animationJs === 0 && $scrollTop < (heightCanvas - 130)) { //volvemos a lanzar la locura si la estamos viendo
-  //   animationJs = requestAnimationFrame( render );
-  // }
-
-//});
-
 function toggleMenu() {
   $('#menu').toggleClass('menuActive');
   $('#burguer').toggleClass('menuActive');
 }
 
 function animaScroll(where) {
-  $('html, body').animate({
-    scrollTop: (heightCanvas * where) + 'px'
-  }, 800, function() {
-    //toggleMenu();
-    $('#burguer').removeClass('menuActive');
-    $('#menu').removeClass('menuActive');
-  });
+  var exampleDestination = document.querySelector('#' + where);
+  smoothScroll(exampleDestination);
+
 }
 
 window.onresize = onWindowResize;
 
 $(document).ready(function() {
   render();
-  window.onscroll = onScroll;
 
   $('#burguer').on( 'click', function() { //show hide menu
     toggleMenu();
