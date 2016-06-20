@@ -158,6 +158,7 @@ canvas {
   display: block;
   font-size: 10rem;
   line-height: 12rem;
+  font-weight: 700;
   transition: -webkit-filter .6s ease, filter .6s ease;
   will-change: -webkit-filter, filter;
 }
@@ -233,6 +234,7 @@ canvas {
    display: inline-block;
    font-size: 7rem;
    text-transform: uppercase;
+   font-weight: 700;
 }
 .section {
   background-color: @colorBg3;
@@ -263,6 +265,26 @@ canvas {
   color: @colorText4;
   text-decoration: none;
 }
+.img-responsive {
+  .size;
+}
+.portfolio-item {
+  .size((70/4vw),(70/4vw));
+  display: inline-block;
+  float: left;
+}
+
+@media (max-width : 1300px) {
+  .portfolio-item {
+    .size((70/3vw),(70/3vw));
+  }
+}
+
+// @media (max-width : 1300px) {
+//   .portfolio-item {
+//     .size((70/2vw),(70/2vw));
+//   }
+// }
 
 
 @media (min-width : 614px) and (min-height : 460px)  {

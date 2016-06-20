@@ -1,5 +1,16 @@
-var animationJs, widthCanvas, heightCanvas;
+var animationJs, widthCanvas, heightCanvas, actualSection = 0,
+actualSectionName = 'section0',
+controlScroll = true;
 
+var distance = 0,
+    floorRotation = 1,
+    cameraPosition = 6,
+    easingAmount = 0.0007,
+    manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
+
+  if (manyCubes > 1000 ){
+    manyCubes = 1000;
+  }
 // This function can easily be an onClick handler in React components
 
 var scene = new THREE.Scene();
@@ -13,7 +24,7 @@ var renderer = new THREE.WebGLRenderer({
 
 renderer.setClearColor(0xffffff);
 renderer.setSize(window.innerWidth, window.innerHeight);
-$('#wrapper').append(renderer.domElement);
+$('#section0').append(renderer.domElement);
 
 //$(window).resize(onWindowResize);
 
@@ -23,8 +34,12 @@ function onWindowResize() {
   camera.aspect = widthCanvas / heightCanvas;
   camera.updateProjectionMatrix();
   renderer.setSize( widthCanvas, heightCanvas);
-  $('#wrapper').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
+  $('#section0').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
   $('.section').css({'height': heightCanvas + 'px'});
+
+  // controlScroll =false;
+  // destination = document.querySelector('#' + actualSectionName);
+  // smoothScroll(destination, 600, afterScroll);
 }
 
 //Floor
@@ -35,7 +50,7 @@ var floorG = new THREE.BoxGeometry(80,0.60,80),
 
 //Buildings
 var cube = [];
-for(var i = 0; i < 1000; ++i){
+for(var i = 0; i < manyCubes; ++i){
   var rHeight = (Math.random()*6) + 0.25,
       geometry = new THREE.BoxGeometry(0.25, rHeight, 0.25);
       //material = new THREE.MeshLambertMaterial({color: 0xb2d7e5});
@@ -68,15 +83,9 @@ var light1 = new THREE.DirectionalLight(0xffffff, 1);
 scene.add(light1);
 light1.position.set(1.5,2,1);
 
-var light1 = new THREE.DirectionalLight(0xffffff, 0.5);
+light1 = new THREE.DirectionalLight(0xffffff, 0.5);
 scene.add(light1);
 light1.position.set(-1.5,2,1);
-
-
-var distance = 0,
-    floorRotation = 1,
-    cameraPosition = 6,
-    easingAmount = 0.0007;
 
 function render() {
   onWindowResize();
@@ -92,23 +101,10 @@ function render() {
        camera.position.z += yDistance * easingAmount;
    }
 }
-function onScroll() {
-  var $scrollTop = $(this).scrollTop();
-  camera.position.y = 3-($scrollTop / 300);
-  if($scrollTop > (heightCanvas - 130) && animationJs != 0) { //para controlar que no este haciendo la locura si no la veo
-    cancelAnimationFrame(animationJs);
-    animationJs = 0;
-    console.log('cancel animation');
-  } else if ($scrollTop < (heightCanvas - 130)) { //volvemos a lanzar la locura si la estamos viendo
-    animationJs = requestAnimationFrame( render );
-  }
-}
-
-//mouse movement
 
 $('canvas').on('mousemove',function(e){
-      var rotateDamper = 960;
-      var cameraDamper = 750;
+      var rotateDamper = 960,
+          cameraDamper = 750;
 
       floorRotation = -((e.clientX - $('canvas').width()) / rotateDamper);
       cameraPosition = ((e.clientY) / cameraDamper);
@@ -119,10 +115,68 @@ function toggleMenu() {
   $('#burguer').toggleClass('menuActive');
 }
 
-function animaScroll(where) {
-  var exampleDestination = document.querySelector('#' + where);
-  smoothScroll(exampleDestination,500,toggleMenu);
-  //window.smoothScroll(target, duration, callback, context)
+function closeMenu() {
+  $('#menu').removeClass('menuActive');
+  $('#burguer').removeClass('menuActive');
+}
+
+function afterScroll() {
+  closeMenu();
+  controlScroll = true;
+}
+
+function onScroll() {
+
+  var $scrollTop = $(this).scrollTop();
+
+  camera.position.y = 3-($scrollTop / 300);
+
+  if (controlScroll) {
+    controlScroll = false;
+    actualScroll = $(window).scrollTop();
+
+    var cuantoScroll = actualScroll - (actualSection * heightCanvas),
+      destination = '';
+      if (Math.abs(cuantoScroll) < 3 ) {
+
+        destination = document.querySelector('#' + actualSectionName);
+        smoothScroll(destination, 500, afterScroll);
+
+      }  else { //suficiente scroll como para cambiar
+        if (cuantoScroll < 0) {
+          actualSection = actualSection - 1;
+          actualSectionName = 'section' + actualSection;
+          destination = document.querySelector('#' + actualSectionName);
+
+          smoothScroll(destination, 600, afterScroll);
+        } else {
+          actualSection = actualSection + 1;
+          actualSectionName = 'section' + actualSection;
+
+          destination = document.querySelector('#' + actualSectionName);
+
+          smoothScroll(destination, 600, afterScroll);
+        }
+      } //suficiente como para cambiar
+
+      if (actualSection === 0) {
+        animationJs = requestAnimationFrame(render);
+      } else {
+        cancelAnimationFrame(animationJs);
+        animationJs = 0;
+      }
+  } //if controlScroll
+
+}
+
+function animaScroll($element) {
+  controlScroll = false;
+  actualSectionName = $element.attr('data-index');
+  actualSection = $element.index() + 1;
+
+  var destination = document.querySelector('#' + actualSectionName);
+
+  smoothScroll(destination, 500, afterScroll);
 
 }
 
@@ -136,9 +190,9 @@ $(document).ready(function() {
     toggleMenu();
   });
 
-  $('#menu .enlaceMenu').on('click', function(){
+  $('#menu .menuItem').on('click', function(){
     var $this = $(this);
-    animaScroll($this.attr('data-index'));
+    animaScroll($this);
   });
 
 });
