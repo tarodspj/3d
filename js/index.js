@@ -194,5 +194,15 @@ $(document).ready(function() {
     var $this = $(this);
     animaScroll($this);
   });
+  // document.onkeypress = function myFunction() {
+  //   switch (event.keyCode) {
+  //   case 13:
+  //       console.log("Up key is pressed");
+  //       break;
+  //   case 38:
+  //       console.log("Down key is pressed");
+  //       break;
+  //   }
+  // };
 
 });
