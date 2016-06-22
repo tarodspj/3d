@@ -2,15 +2,19 @@ var animationJs, widthCanvas, heightCanvas, actualSection = 0,
 actualSectionName = 'section0',
 controlScroll = true;
 
+var rtime,
+    timeout = false,
+    delta = 200;
+
 var distance = 0,
     floorRotation = 1,
     cameraPosition = 6,
     easingAmount = 0.0007,
     manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
 
-  if (manyCubes > 1000 ){
-    manyCubes = 1000;
-  }
+if (manyCubes > 1000 ){
+  manyCubes = 1000;
+}
 // This function can easily be an onClick handler in React components
 
 var scene = new THREE.Scene();
@@ -28,6 +32,12 @@ $('#section0').append(renderer.domElement);
 
 //$(window).resize(onWindowResize);
 
+function goesTo(sectionToGo) {
+  var destination = document.getElementById(sectionToGo);
+
+  smoothScroll(destination, 500, afterScroll);
+}
+
 function onWindowResize() {
   widthCanvas = window.innerWidth;
   heightCanvas = window.innerHeight;
@@ -37,9 +47,10 @@ function onWindowResize() {
   $('#section0').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
   $('.section').css({'height': heightCanvas + 'px'});
 
-  // controlScroll =false;
-  // destination = document.querySelector('#' + actualSectionName);
-  // smoothScroll(destination, 600, afterScroll);
+  controlScroll = false;
+  destination = document.querySelector('#' + actualSectionName);
+  //goesTo(destination);
+   smoothScroll(destination, 600, afterScroll);
 }
 
 //Floor
@@ -88,9 +99,9 @@ scene.add(light1);
 light1.position.set(-1.5,2,1);
 
 function render() {
-  onWindowResize();
-	animationJs = requestAnimationFrame( render );
-	renderer.render( scene, camera );
+  // onWindowResize();
+	animationJs = requestAnimationFrame(render);
+	renderer.render(scene, camera);
 
   //move camera and city to mouse movement slowly
    var xDistance = floorRotation - floor.rotation.y,
@@ -103,11 +114,11 @@ function render() {
 }
 
 $('canvas').on('mousemove',function(e){
-      var rotateDamper = 960,
-          cameraDamper = 750;
+    var rotateDamper = 960,
+        cameraDamper = 750;
 
-      floorRotation = -((e.clientX - $('canvas').width()) / rotateDamper);
-      cameraPosition = ((e.clientY) / cameraDamper);
+    floorRotation = -((e.clientX - $('canvas').width()) / rotateDamper);
+    cameraPosition = ((e.clientY) / cameraDamper);
 });
 
 function toggleMenu() {
@@ -137,18 +148,20 @@ function onScroll() {
 
     var cuantoScroll = actualScroll - (actualSection * heightCanvas),
       destination = '';
-      if (Math.abs(cuantoScroll) < 3 ) {
+      if (Math.abs(cuantoScroll) < 3) {
 
         destination = document.querySelector('#' + actualSectionName);
         smoothScroll(destination, 500, afterScroll);
+        //goesTo(destination);
 
       }  else { //suficiente scroll como para cambiar
         if (cuantoScroll < 0) {
           actualSection = actualSection - 1;
           actualSectionName = 'section' + actualSection;
           destination = document.querySelector('#' + actualSectionName);
-
           smoothScroll(destination, 600, afterScroll);
+
+          //goesTo(actualSectionName);
         } else {
           actualSection = actualSection + 1;
           actualSectionName = 'section' + actualSection;
@@ -156,6 +169,7 @@ function onScroll() {
           destination = document.querySelector('#' + actualSectionName);
 
           smoothScroll(destination, 600, afterScroll);
+          //goesTo(actualSectionName);
         }
       } //suficiente como para cambiar
 
@@ -174,16 +188,25 @@ function animaScroll($element) {
   actualSectionName = $element.attr('data-index');
   actualSection = $element.index() + 1;
 
-  var destination = document.querySelector('#' + actualSectionName);
-
-  smoothScroll(destination, 500, afterScroll);
+   var destination = document.querySelector('#' + actualSectionName);
+   smoothScroll(destination, 500, afterScroll);
+  //goesTo(actualSectionName);
 
 }
 
-window.onresize = onWindowResize;
+function resizeend() {
+    if (new Date() - rtime < delta) {
+        setTimeout(resizeend, delta);
+    } else {
+        timeout = false;
+        onWindowResize();
+    }
+}
+//window.onresize = onWindowResize;
 
 $(document).ready(function() {
   render();
+  onWindowResize();
   window.onscroll = onScroll;
 
   $('#burguer').on( 'click', function() { //show hide menu
@@ -194,6 +217,16 @@ $(document).ready(function() {
     var $this = $(this);
     animaScroll($this);
   });
+
+  $(window).on('resize', function () {
+    rtime = new Date();
+    if (timeout === false) {
+        timeout = true;
+        setTimeout(resizeend, delta);
+    }
+  });
+
+
   // document.onkeypress = function myFunction() {
   //   switch (event.keyCode) {
   //   case 13:
