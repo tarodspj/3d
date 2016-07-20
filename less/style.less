@@ -243,10 +243,24 @@ canvas {
   }
 }
 
-.contentSection {
-  .absoluteTopRight(50%,0);
+.contentSize {
   width: 70%;
+}
+
+.contentSection {
+  .absoluteTopRight(50%, 0);
   transform: translateY(-50%);
+}
+
+.contentTextWork {
+  .absoluteTopRight(0, 0);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  height: 30vh;
+}
+.contentWork {
+  .absoluteBottomRight;
 }
 
 .normalText {
@@ -264,10 +278,40 @@ canvas {
   .size;
 }
 .portfolio-item {
+  position: relative;
   .size((70/4vw),(70/4vw));
   display: inline-block;
   float: left;
+  &:hover {
+    .hoverWork {
+      transform: translateY(-100%);
+    }
+  }
+}//porfolio item
+
+.hoverWork {
+  .absoluteBottomLeft(-100%, 0);
+  .size;
+  background-color: rgba(0, 0, 0, .7);
+  transition: transform .4s ease;
 }
+.award {
+  padding-left: 1.3em;
+  background-position: .2em center;
+  background-size: auto 88%;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+.cannes {
+  background-image: url('../img/lions.svg');
+}
+.elOjo {
+  background-image: url('../img/elOjo.svg');
+}
+.elSol {
+  background-image: url('../img/sol.svg');
+}
+
 
 @media (max-width : 1300px) {
   .portfolio-item {

@@ -65,18 +65,25 @@ for(var i = 0; i < manyCubes; ++i){
   var rHeight = (Math.random()*6) + 0.25,
       geometry = new THREE.BoxGeometry(0.25, rHeight, 0.25);
       //material = new THREE.MeshLambertMaterial({color: 0xb2d7e5});
-
+      var material = new THREE.MeshStandardMaterial( {
+        color: 0xffffff,
+        emissive: 0x131313,
+        roughness: 0.02,
+        wireframeLinewidth: 1.4,
+        opacity: 0.6,
+        transparent: true
+    } );
   if( i % 11 === 0) {
     var material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     material.opacity = 1;
   } else {
-    var material = new THREE.MeshLambertMaterial({color: 0xb2d7e5});
+    var material = new THREE.MeshLambertMaterial({color: 0x7a7e83});
     material.opacity = 0.9;
     material.transparent = true;
   }
 
   //material.opacity = 0.9;
-  cube[i] = new THREE.Mesh( geometry, material );
+  cube[i] = new THREE.Mesh(geometry, material);
   //floor.add( cube[i] );
   scene.add(cube[i]);
 
@@ -87,14 +94,16 @@ for(var i = 0; i < manyCubes; ++i){
 }
 
 //camera
-camera.position.set(0,3,1);
+camera.position.set(0,3,10);
 
 //lights
 var light1 = new THREE.DirectionalLight(0xffffff, 1);
 scene.add(light1);
 light1.position.set(1.5,2,1);
+var luzAmbiente = new THREE.AmbientLight(0x1b5a6a, .5);
+scene.add(luzAmbiente);
 
-light1 = new THREE.DirectionalLight(0xffffff, 0.5);
+light1 = new THREE.DirectionalLight(0xbfc0c0, 0.5);
 scene.add(light1);
 light1.position.set(-1.5,2,1);
 
