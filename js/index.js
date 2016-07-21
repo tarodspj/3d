@@ -97,10 +97,12 @@ for(var i = 0; i < manyCubes; ++i){
 camera.position.set(0,3,10);
 
 //lights
-var light1 = new THREE.DirectionalLight(0xffffff, 1);
+var light1 = new THREE.DirectionalLight(0xffffff, 1),
+luzAmbiente = new THREE.AmbientLight(0x1b5a6a, 0.5);
+
+light1.position.set(1.5, 2, 1);
+
 scene.add(light1);
-light1.position.set(1.5,2,1);
-var luzAmbiente = new THREE.AmbientLight(0x1b5a6a, .5);
 scene.add(luzAmbiente);
 
 light1 = new THREE.DirectionalLight(0xbfc0c0, 0.5);

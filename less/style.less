@@ -40,7 +40,15 @@ canvas {
   //opacity: 0.5;
   z-index: 1;
 }
-
+.gold {
+  color: #c9af39;
+}
+.silver {
+  color: #bfbfbf;
+}
+.bronze {
+  color: #c69048;
+}
 @widthBurguer: 5rem;
 .burguer {
   .size(@widthBurguer,@widthBurguer);
@@ -282,10 +290,14 @@ canvas {
   .size((70/4vw),(70/4vw));
   display: inline-block;
   float: left;
+  overflow: hidden;
   &:hover {
     .hoverWork {
       transform: translateY(-100%);
     }
+  }
+  a {
+    display: block;
   }
 }//porfolio item
 
@@ -312,6 +324,22 @@ canvas {
   background-image: url('../img/sol.svg');
 }
 
+.awardsList {
+  .absoluteBottomLeft(0, 5%);
+  .size(80%, 13%);
+  overflow: hidden;
+  z-index: 40;
+}
+.awardIco {
+  float: left;
+  display: inline-block;
+  margin-right: .5em;
+  .size(2.3em, 100%);
+  position: relative;
+  svg {
+      fill: currentColor;
+  }
+}
 
 @media (max-width : 1300px) {
   .portfolio-item {
