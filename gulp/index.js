@@ -14,10 +14,12 @@ var gulp = require('gulp'),
     concat = require('gulp-concat'),
     rename = require("gulp-rename"),
     smushit = require('gulp-smushit'),
+    injectSvg = require('gulp-inject-svg'),
     tasks = fs.readdirSync('./gulp/tasks/'),
     Ruta = {
       src: './src/',
       build: './build/',
+      dev: './dev/',
       styles: 'css/',
       js: 'js/',
       img: 'img/'
@@ -42,6 +44,14 @@ var path = require('path');
 gulp.task('default', function () {
     //runSequence(['less', 'minify-js'], callback);
     //runSequence(['css', 'concat-scripts'], callback);
+});
+
+gulp.task('dev', function(callback){
+    destino = Ruta.dev;
+    runSequence('injectSvg', ['less', 'html', 'image-min'], 'minify-js', 'concat-scripts', callback);
+    //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
+    //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
+    //runSequence(['less', 'change-calls-to-min', 'minify', 'minify-js', 'concat-scripts', 'image-min'], callback);
 });
 
 gulp.task('build', function(callback){
@@ -105,6 +115,13 @@ gulp.task('image-min', function () {
       .pipe(gulp.dest(destino + Ruta.img));
 });
 
+gulp.task('injectSvg', function() {
+
+  return gulp.src(Ruta.src + '*.html')
+    .pipe(injectSvg())
+    .pipe(gulp.dest(destino));
+
+});
 
 function callback(){
   console.log('callback');
