@@ -26,8 +26,10 @@ var gulp = require('gulp'),
       img: 'img/'
     },
     NameFile = {
+      myJs: 'main.js',
       minifiedCss: 'style.css',
-      minifiedJs: 'main.min.js'
+      minifiedJs: 'main.min.js',
+      minifiedLibsJs: 'libs.js'
     },
     orderToJsBuid = [
       Ruta.src + Ruta.js + 'three.min.js',
@@ -39,7 +41,6 @@ var gulp = require('gulp'),
       //Ruta.src + Ruta.js + 'three.min.js',
       Ruta.src + Ruta.js + 'sprint.js',
       Ruta.src + Ruta.js + 'smoothscroll.js',
-      Ruta.src + Ruta.js + 'main.js'
     ],
     orderToJs = orderToJsBuid,
     destino = Ruta.src,
@@ -59,6 +60,7 @@ gulp.task('dev', function(callback){
     destino = Ruta.dev;
     orderToJs = orderToJsDev;
     runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
+    //runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
     //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
     //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
     //runSequence(['less', 'change-calls-to-min', 'minify', 'minify-js', 'concat-scripts', 'image-min'], callback);
@@ -67,10 +69,6 @@ gulp.task('dev', function(callback){
 gulp.task('build', function(callback){
     destino = Ruta.build;
     conditionBuild = true;
-    runSequence(['less', 'html', 'image-min'], 'minify-js', 'concat-scripts', callback);
-    //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
-    //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
-    //runSequence(['less', 'change-calls-to-min', 'minify', 'minify-js', 'concat-scripts', 'image-min'], callback);
 });
 
 
@@ -95,7 +93,7 @@ gulp.task('html', function() {
   gulp.src(Ruta.src + '*.html')
     .pipe(htmlreplace({
         'css':  Ruta.styles + NameFile.minifiedCss,
-        'js':  Ruta.js + NameFile.minifiedJs
+        'js':  Ruta.js + NameFile.minifiedLibsJs
     }))
     .pipe(injectSvg())
     .pipe(gulpif(conditionBuild, htmlmin({collapseWhitespace: true, conservativeCollapse: true, removeEmptyAttributes: true})))
@@ -107,13 +105,12 @@ gulp.task('html', function() {
 gulp.task('concat-scripts', function() {
   //return gulp.src(Ruta.src + Ruta.js + '*.js')
   return gulp.src(orderToJs)
-    .pipe(concat(NameFile.minifiedJs))
+    .pipe(concat(NameFile.minifiedLibsJs))
     .pipe(gulp.dest(destino + Ruta.js ));
 });
 
 gulp.task('minify-js', function(){
-  //gulp.src([Ruta.src + Ruta.js + '**/*.js', '!' + Ruta.src + Ruta.js + '**/*.min.js'])
-  gulp.src(destino + Ruta.js + NameFile.minifiedJs)
+  gulp.src([destino + Ruta.js + NameFile.minifiedLibsJs, Ruta.src + Ruta.js + NameFile.myJs])
     .pipe(gulpif(conditionBuild,minifyjs()))
     //.pipe(minifyjs())
     //.pipe(rename({suffix: '.min'}))
