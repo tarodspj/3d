@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
     fs = require('fs'),
     argv = require('yargs').argv,
+    gulpif = require('gulp-if'),
     runSequence = require('run-sequence'),
     newer = require('gulp-newer'),
     htmlmin = require('gulp-htmlmin'),
@@ -28,13 +29,21 @@ var gulp = require('gulp'),
       minifiedCss: 'style.css',
       minifiedJs: 'main.min.js'
     },
-    orderToJs = [
+    orderToJsBuid = [
       Ruta.src + Ruta.js + 'three.min.js',
       Ruta.src + Ruta.js + 'sprint.min.js',
       Ruta.src + Ruta.js + 'smoothscroll.min.js',
-      Ruta.src + Ruta.js + 'index.js'
+      Ruta.src + Ruta.js + 'main.min.js'
     ],
-    destino = Ruta.src;
+    orderToJsDev = [
+      //Ruta.src + Ruta.js + 'three.min.js',
+      Ruta.src + Ruta.js + 'sprint.js',
+      Ruta.src + Ruta.js + 'smoothscroll.js',
+      Ruta.src + Ruta.js + 'main.js'
+    ],
+    orderToJs = orderToJsBuid,
+    destino = Ruta.src,
+    conditionBuild = false;
 
 
 var less = require('gulp-less');
@@ -48,7 +57,8 @@ gulp.task('default', function () {
 
 gulp.task('dev', function(callback){
     destino = Ruta.dev;
-    runSequence('injectSvg', ['less', 'html', 'image-min'], 'minify-js', 'concat-scripts', callback);
+    orderToJs = orderToJsDev;
+    runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
     //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
     //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
     //runSequence(['less', 'change-calls-to-min', 'minify', 'minify-js', 'concat-scripts', 'image-min'], callback);
@@ -56,6 +66,7 @@ gulp.task('dev', function(callback){
 
 gulp.task('build', function(callback){
     destino = Ruta.build;
+    conditionBuild = true;
     runSequence(['less', 'html', 'image-min'], 'minify-js', 'concat-scripts', callback);
     //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
     //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
@@ -86,7 +97,8 @@ gulp.task('html', function() {
         'css':  Ruta.styles + NameFile.minifiedCss,
         'js':  Ruta.js + NameFile.minifiedJs
     }))
-    .pipe(htmlmin({collapseWhitespace: true, conservativeCollapse: true, removeEmptyAttributes: true}))
+    .pipe(injectSvg())
+    .pipe(gulpif(conditionBuild, htmlmin({collapseWhitespace: true, conservativeCollapse: true, removeEmptyAttributes: true})))
     .pipe(gulp.dest(destino));
 });
 
@@ -100,10 +112,12 @@ gulp.task('concat-scripts', function() {
 });
 
 gulp.task('minify-js', function(){
-  gulp.src([Ruta.src + Ruta.js + '**/*.js', '!' + Ruta.src + Ruta.js + '**/*.min.js'])
-    .pipe(minifyjs())
-    .pipe(rename({suffix: '.min'}))
-    .pipe(gulp.dest(Ruta.src + Ruta.js));
+  //gulp.src([Ruta.src + Ruta.js + '**/*.js', '!' + Ruta.src + Ruta.js + '**/*.min.js'])
+  gulp.src(destino + Ruta.js + NameFile.minifiedJs)
+    .pipe(gulpif(conditionBuild,minifyjs()))
+    //.pipe(minifyjs())
+    //.pipe(rename({suffix: '.min'}))
+    .pipe(gulp.dest(destino + Ruta.js));
 });
 
 //images
@@ -115,12 +129,16 @@ gulp.task('image-min', function () {
       .pipe(gulp.dest(destino + Ruta.img));
 });
 
-gulp.task('injectSvg', function() {
+// gulp.task('injectSvg', function() {
+//   return gulp.src(destino + '*.html')
+//     .pipe(injectSvg())
+//     .pipe(gulp.dest(Ruta.src));
+// });
 
-  return gulp.src(Ruta.src + '*.html')
-    .pipe(injectSvg())
-    .pipe(gulp.dest(destino));
-
+gulp.task('copy-svg', function() {
+    gulp.src(Ruta.src + Ruta.img +'**/*.svg')
+    .pipe(newer(destino + Ruta.img))
+    .pipe(gulp.dest(destino + Ruta.img));
 });
 
 function callback(){
