@@ -12,6 +12,7 @@ var gulp = require('gulp'),
     groupMediaQueries = require('less-plugin-group-css-media-queries'),
     LessPluginCleanCSS = require('less-plugin-clean-css'),
     minifyjs = require('gulp-js-minify'),
+    uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     rename = require("gulp-rename"),
     smushit = require('gulp-smushit'),
@@ -34,13 +35,13 @@ var gulp = require('gulp'),
     orderToJsBuid = [
       Ruta.src + Ruta.js + 'three.min.js',
       Ruta.src + Ruta.js + 'sprint.min.js',
-      Ruta.src + Ruta.js + 'smoothscroll.min.js',
+      Ruta.src + Ruta.js + 'smooth-scroll.js',
       Ruta.src + Ruta.js + 'main.min.js'
     ],
     orderToJsDev = [
       //Ruta.src + Ruta.js + 'three.min.js',
       Ruta.src + Ruta.js + 'sprint.js',
-      Ruta.src + Ruta.js + 'smoothscroll.js',
+      Ruta.src + Ruta.js + 'smooth-scroll.js',
     ],
     orderToJs = orderToJsBuid,
     destino = Ruta.src,
@@ -69,6 +70,7 @@ gulp.task('dev', function(callback){
 gulp.task('build', function(callback){
     destino = Ruta.build;
     conditionBuild = true;
+    runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
 });
 
 
@@ -111,7 +113,8 @@ gulp.task('concat-scripts', function() {
 
 gulp.task('minify-js', function(){
   gulp.src([destino + Ruta.js + NameFile.minifiedLibsJs, Ruta.src + Ruta.js + NameFile.myJs])
-    .pipe(gulpif(conditionBuild,minifyjs()))
+    //.pipe(gulpif(conditionBuild,minifyjs()))
+    .pipe(uglify())
     //.pipe(minifyjs())
     //.pipe(rename({suffix: '.min'}))
     .pipe(gulp.dest(destino + Ruta.js));

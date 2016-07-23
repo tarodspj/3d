@@ -32,11 +32,11 @@ $('#section0').append(renderer.domElement);
 
 //$(window).resize(onWindowResize);
 
-function goesTo(sectionToGo) {
-  var destination = document.getElementById(sectionToGo);
-
-  smoothScroll(destination, 500, afterScroll);
-}
+// function goesTo(sectionToGo) {
+//   var destination = document.getElementById(sectionToGo);
+//
+//   smoothScroll(destination, 500, afterScroll);
+// }
 
 function onWindowResize() {
   widthCanvas = window.innerWidth;
@@ -49,8 +49,9 @@ function onWindowResize() {
 
   controlScroll = false;
   destination = document.querySelector('#' + actualSectionName);
+  smoothScroll.animateScroll( '#' + actualSectionName );
   //goesTo(destination);
-   smoothScroll(destination, 600, afterScroll);
+   //smoothScroll(destination, 600, afterScroll);
 }
 
 //Floor
@@ -161,25 +162,26 @@ function onScroll() {
       destination = '';
       if (Math.abs(cuantoScroll) < 3) {
 
-        destination = document.querySelector('#' + actualSectionName);
-        smoothScroll(destination, 500, afterScroll);
+        //destination = document.querySelector('#' + actualSectionName);
+        smoothScroll.animateScroll( '#' + actualSectionName );
         //goesTo(destination);
 
       }  else { //suficiente scroll como para cambiar
         if (cuantoScroll < 0) {
           actualSection = actualSection - 1;
           actualSectionName = 'section' + actualSection;
-          destination = document.querySelector('#' + actualSectionName);
-          smoothScroll(destination, 600, afterScroll);
+          smoothScroll.animateScroll( '#' + actualSectionName );
+          //destination = document.querySelector('#' + actualSectionName);
+          //smoothScroll(destination, 600, afterScroll);
 
           //goesTo(actualSectionName);
         } else {
           actualSection = actualSection + 1;
           actualSectionName = 'section' + actualSection;
+          smoothScroll.animateScroll( '#' + actualSectionName );
+          //destination = document.querySelector('#' + actualSectionName);
 
-          destination = document.querySelector('#' + actualSectionName);
-
-          smoothScroll(destination, 600, afterScroll);
+          //smoothScroll(destination, 600, afterScroll);
           //goesTo(actualSectionName);
         }
       } //suficiente como para cambiar
@@ -194,16 +196,16 @@ function onScroll() {
 
 }
 
-function animaScroll($element) {
-  controlScroll = false;
-  actualSectionName = $element.attr('data-index');
-  actualSection = $element.index() + 1;
-
-   var destination = document.querySelector('#' + actualSectionName);
-   smoothScroll(destination, 500, afterScroll);
-  //goesTo(actualSectionName);
-
-}
+// function animaScroll($element) {
+//   controlScroll = false;
+//   actualSectionName = $element.attr('data-index');
+//   actualSection = $element.index() + 1;
+//
+//    var destination = document.querySelector('#' + actualSectionName);
+//    smoothScroll(destination, 500, afterScroll);
+//   //goesTo(actualSectionName);
+//
+// }
 
 function resizeend() {
     if (new Date() - rtime < delta) {
@@ -217,6 +219,18 @@ function resizeend() {
 
 $(document).ready(function() {
   render();
+  smoothScroll.init({
+    selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
+    //selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
+    speed: 500, // Integer. How fast to complete the scroll in milliseconds
+    easing: 'easeInOutCubic', // Easing pattern to use
+    offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
+    updateURL: false, // Boolean. If true, update the URL hash on scroll
+    callback: function ( anchor, toggle ) {
+      afterScroll();
+    } // Function to run after scrolling
+  });
+
   onWindowResize();
   window.onscroll = onScroll;
 
@@ -224,10 +238,10 @@ $(document).ready(function() {
     toggleMenu();
   });
 
-  $('#menu .menuItem').on('click', function(){
-    var $this = $(this);
-    animaScroll($this);
-  });
+  // $('#menu .menuItem').on('click', function(){
+  //   var $this = $(this);
+  //   animaScroll($this);
+  // });
 
   $(window).on('resize', function () {
     rtime = new Date();

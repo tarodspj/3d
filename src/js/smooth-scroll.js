@@ -285,7 +285,7 @@
 		location = Math.max(location - headerHeight - offset, 0);
 		return Math.min(location, getDocumentHeight() - getViewportHeight());
 	};
-
+	
 	/**
 	 * Determine the viewport's height
 	 * @private
