@@ -30,6 +30,9 @@ renderer.setClearColor(0xffffff);
 renderer.setSize(window.innerWidth, window.innerHeight);
 $('#section0').append(renderer.domElement);
 
+function goesTo(where) {
+  smoothScroll.animateScroll( '#' + where );
+}
 //$(window).resize(onWindowResize);
 
 // function goesTo(sectionToGo) {
@@ -48,10 +51,7 @@ function onWindowResize() {
   $('.section').css({'height': heightCanvas + 'px'});
 
   controlScroll = false;
-  destination = document.querySelector('#' + actualSectionName);
-  smoothScroll.animateScroll( '#' + actualSectionName );
-  //goesTo(destination);
-   //smoothScroll(destination, 600, afterScroll);
+  goesTo(actualSectionName);
 }
 
 //Floor
@@ -152,7 +152,7 @@ function onScroll() {
 
   var $scrollTop = $(this).scrollTop();
 
-  camera.position.y = 3-($scrollTop / 300);
+  camera.position.y = 3 - ($scrollTop / 300);
 
   if (controlScroll) {
     controlScroll = false;
@@ -160,29 +160,20 @@ function onScroll() {
 
     var cuantoScroll = actualScroll - (actualSection * heightCanvas),
       destination = '';
-      if (Math.abs(cuantoScroll) < 3) {
-
-        //destination = document.querySelector('#' + actualSectionName);
-        smoothScroll.animateScroll( '#' + actualSectionName );
-        //goesTo(destination);
+      if (Math.abs(cuantoScroll) < 1) {
+        goesTo(actualSectionName);
 
       }  else { //suficiente scroll como para cambiar
         if (cuantoScroll < 0) {
           actualSection = actualSection - 1;
           actualSectionName = 'section' + actualSection;
-          smoothScroll.animateScroll( '#' + actualSectionName );
-          //destination = document.querySelector('#' + actualSectionName);
-          //smoothScroll(destination, 600, afterScroll);
 
-          //goesTo(actualSectionName);
+          goesTo(actualSectionName);
         } else {
           actualSection = actualSection + 1;
           actualSectionName = 'section' + actualSection;
-          smoothScroll.animateScroll( '#' + actualSectionName );
-          //destination = document.querySelector('#' + actualSectionName);
 
-          //smoothScroll(destination, 600, afterScroll);
-          //goesTo(actualSectionName);
+          goesTo(actualSectionName);
         }
       } //suficiente como para cambiar
 
@@ -196,17 +187,6 @@ function onScroll() {
 
 }
 
-// function animaScroll($element) {
-//   controlScroll = false;
-//   actualSectionName = $element.attr('data-index');
-//   actualSection = $element.index() + 1;
-//
-//    var destination = document.querySelector('#' + actualSectionName);
-//    smoothScroll(destination, 500, afterScroll);
-//   //goesTo(actualSectionName);
-//
-// }
-
 function resizeend() {
     if (new Date() - rtime < delta) {
         setTimeout(resizeend, delta);
@@ -215,7 +195,6 @@ function resizeend() {
         onWindowResize();
     }
 }
-//window.onresize = onWindowResize;
 
 $(document).ready(function() {
   render();
@@ -237,11 +216,6 @@ $(document).ready(function() {
   $('#burguer').on( 'click', function() { //show hide menu
     toggleMenu();
   });
-
-  // $('#menu .menuItem').on('click', function(){
-  //   var $this = $(this);
-  //   animaScroll($this);
-  // });
 
   $(window).on('resize', function () {
     rtime = new Date();
