@@ -4,7 +4,7 @@ controlScroll = true;
 
 var rtime,
     timeout = false,
-    delta = 200;
+    delta = 300;
 
 var distance = 0,
     floorRotation = 1,
@@ -13,7 +13,7 @@ var distance = 0,
     manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
 
 if (manyCubes > 1000 ){
-  manyCubes = 1000;
+  manyCubes = 600;
 }
 
 var scene = new THREE.Scene();
@@ -30,6 +30,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 $('#section0').append(renderer.domElement);
 
 function goesTo(where) {
+  controlScroll = false;
   smoothScroll.animateScroll( '#' + where );
 }
 
@@ -42,7 +43,7 @@ function onWindowResize() {
   $('#section0').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
   $('.section').css({'height': heightCanvas + 'px'});
 
-  controlScroll = false;
+  //controlScroll = false;
   goesTo(actualSectionName);
 }
 
@@ -155,17 +156,19 @@ function onScroll() {
       if (Math.abs(cuantoScroll) < 1) {
         goesTo(actualSectionName);
 
-      }  else { //suficiente scroll como para cambiar
+      } else { //suficiente scroll como para cambiar
         if (cuantoScroll < 0) {
           actualSection = actualSection - 1;
           actualSectionName = 'section' + actualSection;
 
           goesTo(actualSectionName);
+
         } else {
           actualSection = actualSection + 1;
           actualSectionName = 'section' + actualSection;
 
           goesTo(actualSectionName);
+
         }
       } //suficiente como para cambiar
 
@@ -198,12 +201,20 @@ $(document).ready(function() {
     offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
     updateURL: false, // Boolean. If true, update the URL hash on scroll
     callback: function ( anchor, toggle ) {
+      console.log(anchor);
       afterScroll();
+      controlScroll = true;
     } // Function to run after scrolling
 
   });
+  $('.enlaceMenu').on('click', function(){
+    var whereToGo = $(this).attr('data-scroll');
+    actualSection = whereToGo;
+    goesTo(whereToGo);
+  });
 
   onWindowResize();
+
   window.onscroll = onScroll;
 
   $('#burguer').on( 'click', function() { //show hide menu
@@ -211,6 +222,7 @@ $(document).ready(function() {
   });
 
   $(window).on('resize', function () {
+    controlScroll = false;
     rtime = new Date();
     if (timeout === false) {
         timeout = true;

@@ -17,7 +17,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-font-smoothing: antialiased;
 }
-
+.gradient (@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+	background: -ms-linear-gradient(top, @startColor, @endColor);
+	background: -o-linear-gradient(top, @startColor, @endColor);
+	background: linear-gradient(to right, @startColor 0%, @endColor 100%);
+}
 .comunArrows{
 	width: 		0;
 	height: 	0;
