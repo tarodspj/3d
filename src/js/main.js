@@ -15,7 +15,6 @@ var distance = 0,
 if (manyCubes > 1000 ){
   manyCubes = 1000;
 }
-// This function can easily be an onClick handler in React components
 
 var scene = new THREE.Scene();
 scene.fog = new THREE.FogExp2(0xffffff, 0.13);
@@ -33,13 +32,6 @@ $('#section0').append(renderer.domElement);
 function goesTo(where) {
   smoothScroll.animateScroll( '#' + where );
 }
-//$(window).resize(onWindowResize);
-
-// function goesTo(sectionToGo) {
-//   var destination = document.getElementById(sectionToGo);
-//
-//   smoothScroll(destination, 500, afterScroll);
-// }
 
 function onWindowResize() {
   widthCanvas = window.innerWidth;
@@ -208,6 +200,7 @@ $(document).ready(function() {
     callback: function ( anchor, toggle ) {
       afterScroll();
     } // Function to run after scrolling
+
   });
 
   onWindowResize();

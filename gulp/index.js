@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
     fs = require('fs'),
     argv = require('yargs').argv,
+    watch = require('gulp-watch'),
     gulpif = require('gulp-if'),
     runSequence = require('run-sequence'),
     newer = require('gulp-newer'),
@@ -22,6 +23,7 @@ var gulp = require('gulp'),
       src: './src/',
       build: './build/',
       dev: './dev/',
+      less: 'less/',
       styles: 'css/',
       js: 'js/',
       img: 'img/'
@@ -44,7 +46,7 @@ var gulp = require('gulp'),
       Ruta.src + Ruta.js + 'smooth-scroll.js',
     ],
     orderToJs = orderToJsBuid,
-    destino = Ruta.src,
+    destino = Ruta.dev,
     conditionBuild = false;
 
 
@@ -79,7 +81,7 @@ var autoprefix = new LessAutoprefix({ browsers: ['last 4 versions'] }),
     cleanCSSPlugin = new LessPluginCleanCSS({advanced: true});
 
 gulp.task('less', function(){
-  return gulp.src(Ruta.src + 'less/style.less')
+  return gulp.src(Ruta.src + Ruta.less + 'style.less')
     .pipe(less({
         plugins: [autoprefix, groupMediaQueries, cleanCSSPlugin]
     }))
@@ -144,3 +146,10 @@ gulp.task('copy-svg', function() {
 function callback(){
   console.log('callback');
 }
+
+//watch ---
+gulp.task('watch', function() {
+  gulp.watch(Ruta.src + '*.html', ['html']);
+  gulp.watch(Ruta.src + Ruta.less + '**/*.less', ['less']);
+  gulp.watch(Ruta.src + Ruta.js + '**/*.js', ['concat-scripts', 'minify-js']);
+});
