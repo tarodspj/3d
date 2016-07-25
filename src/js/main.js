@@ -32,6 +32,7 @@ $('#section0').append(renderer.domElement);
 function goesTo(where) {
   controlScroll = false;
   smoothScroll.animateScroll( '#' + where );
+  console.log(controlScroll + ' AA');
 }
 
 function onWindowResize() {
@@ -137,8 +138,9 @@ function closeMenu() {
 }
 
 function afterScroll() {
-  closeMenu();
   controlScroll = true;
+  closeMenu();
+  console.log(controlScroll + '-');
 }
 
 function onScroll() {
@@ -179,7 +181,6 @@ function onScroll() {
         animationJs = 0;
       }
   } //if controlScroll
-
 }
 
 function resizeend() {
@@ -203,14 +204,18 @@ $(document).ready(function() {
     callback: function ( anchor, toggle ) {
       console.log(anchor);
       afterScroll();
-      controlScroll = true;
     } // Function to run after scrolling
 
   });
   $('.enlaceMenu').on('click', function(){
     var whereToGo = $(this).attr('data-scroll');
-    actualSection = whereToGo;
-    goesTo(whereToGo);
+    if(whereToGo === 'actualSection') {
+      closeMenu();
+    }
+    else {
+      actualSection = whereToGo;
+      goesTo(whereToGo);
+    }
   });
 
   onWindowResize();

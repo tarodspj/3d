@@ -36,17 +36,15 @@ var gulp = require('gulp'),
       minifiedLibsJs: 'libs.js'
     },
     orderToJsBuid = [
-      Ruta.src + Ruta.js + 'three.min.js',
-      Ruta.src + Ruta.js + 'sprint.min.js',
-      Ruta.src + Ruta.js + 'smooth-scroll.js',
-      Ruta.src + Ruta.js + 'main.min.js'
+      Ruta.src + Ruta.js + 'sprint.js',
+      Ruta.src + Ruta.js + 'smooth-scroll.js'
     ],
     orderToJsDev = [
       //Ruta.src + Ruta.js + 'three.min.js',
       Ruta.src + Ruta.js + 'sprint.js',
-      Ruta.src + Ruta.js + 'smooth-scroll.js',
+      Ruta.src + Ruta.js + 'smooth-scroll.js'
     ],
-    orderToJs = orderToJsBuid,
+    orderToJs = orderToJsDev,
     destino = Ruta.dev,
     conditionBuild = false;
 
@@ -74,6 +72,7 @@ gulp.task('dev', function(callback){
 
 gulp.task('build', function(callback){
     destino = Ruta.build;
+    orderToJs = orderToJsBuild;
     conditionBuild = true;
     runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
 });
@@ -163,5 +162,9 @@ gulp.task('browser-sync', function() {
 gulp.task('watch', function() {
   gulp.watch(Ruta.src + '*.html', ['html']);
   gulp.watch(Ruta.src + Ruta.less + '**/*.less', ['less']);
-  gulp.watch(Ruta.src + Ruta.js + '**/*.js', ['concat-scripts', 'minify-js']);
+  gulp.watch(Ruta.src + Ruta.js + '**/*.js', function() {
+    runSequence('concat-scripts', 'minify-js');
+
+  });
+
 });
