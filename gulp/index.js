@@ -6,6 +6,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch'),
     gulpif = require('gulp-if'),
     runSequence = require('run-sequence'),
+    browserSync = require('browser-sync').create(),
     newer = require('gulp-newer'),
     htmlmin = require('gulp-htmlmin'),
     htmlreplace = require('gulp-html-replace'),
@@ -58,6 +59,8 @@ gulp.task('default', function () {
     //runSequence(['less', 'minify-js'], callback);
     //runSequence(['css', 'concat-scripts'], callback);
 });
+
+gulp.task('start', ['watch']);
 
 gulp.task('dev', function(callback){
     destino = Ruta.dev;
@@ -148,6 +151,15 @@ function callback(){
 }
 
 //watch ---
+
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./"
+        }
+    });
+});
+
 gulp.task('watch', function() {
   gulp.watch(Ruta.src + '*.html', ['html']);
   gulp.watch(Ruta.src + Ruta.less + '**/*.less', ['less']);
