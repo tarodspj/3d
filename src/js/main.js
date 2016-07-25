@@ -1,6 +1,7 @@
 var animationJs, widthCanvas, heightCanvas, actualSection = 0,
 actualSectionName = 'section0',
-controlScroll = true;
+controlScroll = true,
+scrolling;
 
 var rtime,
     timeout = false,
@@ -31,8 +32,7 @@ $('#section0').append(renderer.domElement);
 
 function goesTo(where) {
   controlScroll = false;
-  smoothScroll.animateScroll( '#' + where );
-  console.log(controlScroll + ' AA');
+  scrollTemporal = smoothScroll.animateScroll('#' + where);
 }
 
 function onWindowResize() {
@@ -138,9 +138,11 @@ function closeMenu() {
 }
 
 function afterScroll() {
-  controlScroll = true;
+
   closeMenu();
-  console.log(controlScroll + '-');
+  //smoothScroll.destroy();
+  console.log('afterScroll');
+  controlScroll = true;
 }
 
 function onScroll() {
@@ -150,7 +152,6 @@ function onScroll() {
   camera.position.y = 3 - ($scrollTop / 300);
 
   if (controlScroll) {
-    controlScroll = false;
     actualScroll = $(window).scrollTop();
 
     var cuantoScroll = actualScroll - (actualSection * heightCanvas),
@@ -166,7 +167,7 @@ function onScroll() {
           goesTo(actualSectionName);
 
         } else {
-          actualSection = actualSection + 1;
+          actualSection = parseInt(actualSection, 10) + 1;
           actualSectionName = 'section' + actualSection;
 
           goesTo(actualSectionName);
@@ -194,6 +195,13 @@ function resizeend() {
 
 $(document).ready(function() {
   render();
+  scrolling = smoothScroll.init({
+    callback: function ( anchor, toggle ) {
+      console.log(anchor);
+      afterScroll();
+    } // Function to run after scrolling
+  });
+/*
   smoothScroll.init({
     selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
     //selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
@@ -207,13 +215,14 @@ $(document).ready(function() {
     } // Function to run after scrolling
 
   });
+*/
   $('.enlaceMenu').on('click', function(){
     var whereToGo = $(this).attr('data-scroll');
-    if(whereToGo === 'actualSection') {
+    if(whereToGo === actualSectionName) {
       closeMenu();
     }
     else {
-      actualSection = whereToGo;
+      actualSectionName = whereToGo;
       goesTo(whereToGo);
     }
   });
