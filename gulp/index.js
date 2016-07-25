@@ -41,8 +41,7 @@ var gulp = require('gulp'),
     ],
     orderToJsDev = [
       //Ruta.src + Ruta.js + 'three.min.js',
-      Ruta.src + Ruta.js + 'sprint.js',
-      Ruta.src + Ruta.js + 'smooth-scroll.js'
+      Ruta.src + Ruta.js + 'jquery.custom.js'
     ],
     orderToJs = orderToJsDev,
     destino = Ruta.dev,

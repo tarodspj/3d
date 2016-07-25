@@ -32,7 +32,9 @@ $('#section0').append(renderer.domElement);
 
 function goesTo(where) {
   controlScroll = false;
-  scrollTemporal = smoothScroll.animateScroll('#' + where);
+  $('html, body').animate({
+       scrollTop: $('#' + where).offset().top
+   }, 600);
 }
 
 function onWindowResize() {
@@ -195,27 +197,7 @@ function resizeend() {
 
 $(document).ready(function() {
   render();
-  scrolling = smoothScroll.init({
-    callback: function ( anchor, toggle ) {
-      console.log(anchor);
-      afterScroll();
-    } // Function to run after scrolling
-  });
-/*
-  smoothScroll.init({
-    selector: '[data-scroll]', // Selector for links (must be a valid CSS selector)
-    //selectorHeader: '[data-scroll-header]', // Selector for fixed headers (must be a valid CSS selector)
-    speed: 500, // Integer. How fast to complete the scroll in milliseconds
-    easing: 'easeInOutCubic', // Easing pattern to use
-    offset: 0, // Integer. How far to offset the scrolling anchor location in pixels
-    updateURL: false, // Boolean. If true, update the URL hash on scroll
-    callback: function ( anchor, toggle ) {
-      console.log(anchor);
-      afterScroll();
-    } // Function to run after scrolling
 
-  });
-*/
   $('.enlaceMenu').on('click', function(){
     var whereToGo = $(this).attr('data-scroll');
     if(whereToGo === actualSectionName) {
