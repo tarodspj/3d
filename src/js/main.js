@@ -34,7 +34,9 @@ function goesTo(where) {
   controlScroll = false;
   $('html, body').animate({
        scrollTop: $('#' + where).offset().top
-   }, 600);
+   }, 600, function(){
+     afterScroll();
+   });
 }
 
 function onWindowResize() {
@@ -154,6 +156,7 @@ function onScroll() {
   camera.position.y = 3 - ($scrollTop / 300);
 
   if (controlScroll) {
+    controlScroll = false;
     actualScroll = $(window).scrollTop();
 
     var cuantoScroll = actualScroll - (actualSection * heightCanvas),

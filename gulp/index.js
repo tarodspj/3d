@@ -17,7 +17,11 @@ var gulp = require('gulp'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     rename = require("gulp-rename"),
-    smushit = require('gulp-smushit'),
+    //smushit = require('gulp-smushit'),
+    imagemin = require('gulp-imagemin'),
+    pngquant = require('imagemin-pngquant'),
+    jpegtran = require('imagemin-jpegtran'),
+    gifsicle = require('imagemin-gifsicle'),
     injectSvg = require('gulp-inject-svg'),
     tasks = fs.readdirSync('./gulp/tasks/'),
     Ruta = {
@@ -36,8 +40,7 @@ var gulp = require('gulp'),
       minifiedLibsJs: 'libs.js'
     },
     orderToJsBuid = [
-      Ruta.src + Ruta.js + 'sprint.js',
-      Ruta.src + Ruta.js + 'smooth-scroll.js'
+      Ruta.src + Ruta.js + 'jquery.custom.js'
     ],
     orderToJsDev = [
       //Ruta.src + Ruta.js + 'three.min.js',
@@ -71,7 +74,7 @@ gulp.task('dev', function(callback){
 
 gulp.task('build', function(callback){
     destino = Ruta.build;
-    orderToJs = orderToJsBuild;
+    orderToJs = orderToJsBuid;
     conditionBuild = true;
     runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
 });
@@ -128,9 +131,20 @@ gulp.task('minify-js', function(){
 gulp.task('image-min', function () {
     return gulp.src(Ruta.src + Ruta.img + '**/*.{jpg,png}')
       .pipe(newer(destino + Ruta.img))
-      .pipe(smushit())
+      .pipe(imagemin({
+          progressive: false,
+          svgoPlugins: [{removeViewBox: false}],
+          use: [pngquant(), jpegtran(), gifsicle()]
+      }))
       .pipe(gulp.dest(destino + Ruta.img));
 });
+
+// gulp.task('image-min', function () {
+//     return gulp.src(Ruta.src + Ruta.img + '**/*.{jpg,png}')
+//       .pipe(newer(destino + Ruta.img))
+//       .pipe(smushit())
+//       .pipe(gulp.dest(destino + Ruta.img));
+// });
 
 // gulp.task('injectSvg', function() {
 //   return gulp.src(destino + '*.html')
