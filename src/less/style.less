@@ -4,6 +4,7 @@
 //@colorBg2:      rgba(235,152,50,1);
 @colorBg2:      #f00;
 @colorBg3:      #cacaca;
+@colorBg4:      #3881FF;
 
 @colorText1:    #151515;
 @colorText2:    #000000;
@@ -387,6 +388,41 @@ canvas {
   svg {
       fill: currentColor;
   }
+}
+
+.portfolioDetail {
+  position: fixed;
+  top: 0;
+  right: 0;
+  transform: translateX(70vw);
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+  overflow: hidden;;
+  .size(70vw,@heightMenu);
+  background: @colorBg4;
+  z-index: 80;
+  transition: transform .8s ease;
+  &.active {
+      transform: translateX(0);
+  }
+}
+.imagePortfolio {
+  width: 100%;
+  height: auto;
+}
+.titlePortfolioDetail {
+  font-size: 3rem;
+  margin: 10vh auto;
+  text-align: center;
+  font-weight: bold;
+}
+
+.anchorDetailPortfolio {
+  display: block;
+  margin: 10vh auto;
+  text-align: center;
 }
 
 @media (max-width : 1300px) {

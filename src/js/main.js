@@ -8,7 +8,7 @@ var rtime,
     delta = 300;
 
 var distance = 0,
-    floorRotation = 1,
+    floorRotation = 3,
     cameraPosition = 6,
     easingAmount = 0.0007,
     manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
@@ -63,21 +63,23 @@ var cube = [];
 for(var i = 0; i < manyCubes; ++i){
   var rHeight = (Math.random()*6) + 0.25,
       geometry = new THREE.BoxGeometry(0.25, rHeight, 0.25);
-      //material = new THREE.MeshLambertMaterial({color: 0xb2d7e5});
+      //material = new THREE.MeshLambertMaterial({color: 0x91CEFF});
       var material = new THREE.MeshStandardMaterial( {
         color: 0xffffff,
-        emissive: 0x131313,
+        //emissive: 0x131313,
         roughness: 0.02,
         wireframeLinewidth: 1.4,
-        opacity: 0.6,
-        transparent: true
+        //opacity: 0.6,
+        //transparent: true
     } );
   if( i % 11 === 0) {
     var material = new THREE.MeshLambertMaterial({color: 0xFF0000});
     material.opacity = 1;
   } else {
-    var material = new THREE.MeshLambertMaterial({color: 0x7a7e83});
-    material.opacity = 0.9;
+    //var material = new THREE.MeshLambertMaterial({color: 0x7a7e83});
+    var material = new THREE.MeshLambertMaterial({color: 0x91CEFF});
+
+    material.opacity = 1;
     material.transparent = true;
   }
 
@@ -86,8 +88,8 @@ for(var i = 0; i < manyCubes; ++i){
   //floor.add( cube[i] );
   scene.add(cube[i]);
 
-  var x = (Math.random() * (10.00 - (-10)) + -10).toFixed(2),
-      y = 0,
+  var x = (Math.random() * (10.00 - (-4)) + -4).toFixed(2),
+      y = Math.random() * 1.1,
       z = (Math.random() * (10.00 - (-10)) + -10).toFixed(2);
   cube[i].position.set(x,y,z);
 }
@@ -97,14 +99,14 @@ camera.position.set(0,3,10);
 
 //lights
 var light1 = new THREE.DirectionalLight(0xffffff, 1),
-luzAmbiente = new THREE.AmbientLight(0x1b5a6a, 0.5);
+luzAmbiente = new THREE.AmbientLight(0x3881FF, 0.5);
 
 light1.position.set(1.5, 2, 1);
 
 scene.add(light1);
 scene.add(luzAmbiente);
 
-light1 = new THREE.DirectionalLight(0xbfc0c0, 0.5);
+light1 = new THREE.DirectionalLight(0x3881FF, 0.5);
 scene.add(light1);
 light1.position.set(-1.5,2,1);
 
@@ -139,6 +141,13 @@ function toggleMenu() {
 function closeMenu() {
   $('#menu').removeClass('menuActive');
   $('#burguer').removeClass('menuActive');
+}
+function togglePortfolioDetail() {
+  $('#portfolioDetail').toggleClass('active');
+}
+
+function closePortfolioDetail() {
+  $('#portfolioDetail').removeClass('active');
 }
 
 function afterScroll() {
@@ -216,10 +225,14 @@ $(document).ready(function() {
 
   window.onscroll = onScroll;
 
-  $('#burguer').on( 'click', function() { //show hide menu
+  $('#burguer').on('click', function() { //show hide menu
     toggleMenu();
   });
-
+  $('#contentWork .portfolio-item').on('click', function() {
+    var workToSee = $(this).index();
+    controlScroll = true;
+    togglePortfolioDetail();
+  });
   $(window).on('resize', function () {
     controlScroll = false;
     rtime = new Date();
