@@ -1,5 +1,6 @@
 .DS_Store
 *.log
+*.psd
 node_modules
 build
 dev
