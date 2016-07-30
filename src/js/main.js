@@ -13,6 +13,9 @@ var distance = 0,
     easingAmount = 0.0007,
     manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
 
+var manyWorks = 6,
+    actualWork = 0;
+
 if (manyCubes > 1000 ){
   manyCubes = 600;
 }
@@ -38,6 +41,15 @@ function goesTo(where) {
      afterScroll();
    });
 }
+
+function goesToWork(whatWork) {
+  console.log('this work' + whatWork);
+  actualWork = whatWork;
+  var howMuchToMove = whatWork * (100 / manyWorks);
+  $('#portfolioDetailContainer').css('transform', 'translateX(-' + howMuchToMove + '%)');
+}
+
+
 
 function onWindowResize() {
   widthCanvas = window.innerWidth;
@@ -228,11 +240,36 @@ $(document).ready(function() {
   $('#burguer').on('click', function() { //show hide menu
     toggleMenu();
   });
+
   $('#contentWork .portfolio-item').on('click', function() {
     var workToSee = $(this).index();
     controlScroll = true;
+    goesToWork(workToSee);
     togglePortfolioDetail();
   });
+  $('#buttonNext').on('click', function() {
+    var workToSee = actualWork + 1;
+
+    if(workToSee === manyWorks) {
+      workToSee = 0;
+    }
+    goesToWork(workToSee);
+  });
+  $('#buttonPrev').on('click', function() {
+    var workToSee = actualWork - 1;
+
+    if(actualWork === 0) {
+      workToSee = manyWorks - 1;
+    }
+
+    goesToWork(workToSee);
+  });
+
+
+  $('#closeDetail').on('click', function() {
+    togglePortfolioDetail();
+  });
+
   $(window).on('resize', function () {
     controlScroll = false;
     rtime = new Date();

@@ -1,6 +1,10 @@
 @widthButtons: 9vh;
 @heightButtons: @widthButtons;
 .nav-fillpath {
+		display: block;
+    position: absolute;
+    bottom: 0;
+		width: 100%;
 	.button {
 		width: @widthButtons;
 		height: @heightButtons;
@@ -11,6 +15,7 @@
 		text-align: left;
 		z-index: 1000;
 		transform: translateY(-50%);
+		cursor: pointer;
 		&.prev {
 			left: 0;
 		}
@@ -44,6 +49,7 @@
 		height: @heightButtons;
 		margin: 0 auto;
 		transform: translateY(-50%);
+		cursor: pointer;
 		&::before {
     transform: rotate(-45deg);
 		}

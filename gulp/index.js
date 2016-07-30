@@ -175,7 +175,7 @@ gulp.task('browser-sync', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(Ruta.src + '*.html', ['html']);
+  gulp.watch(Ruta.src + '**/*.html', ['html']);
   gulp.watch(Ruta.src + Ruta.less + '**/*.less', ['less']);
   gulp.watch(Ruta.src + Ruta.js + '**/*.js', function() {
     runSequence('concat-scripts', 'minify-js');

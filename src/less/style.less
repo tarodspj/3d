@@ -389,17 +389,21 @@ canvas {
       fill: currentColor;
   }
 }
-
+.portfolioDetailContainer {
+  overflow: hidden;
+  .absoluteTopLeft;
+  .size(100*6%, 100%);
+  transition: transform .5s ease-out;
+}
 .portfolioDetail {
-  position: absolute;
-  top: 0;
-  right: 0;
+  .absoluteTopRight;
+  height: 100%;
   transform: translateX(70vw);
   flex-flow: column nowrap;
   justify-content: center;
   align-items: stretch;
   align-content: stretch;
-  overflow: hidden;;
+  overflow: hidden;
   .size(70vw,@heightMenu);
   background: @colorBg4;
   z-index: 80;
@@ -408,6 +412,13 @@ canvas {
       transform: translateX(0);
   }
 }
+.portfolioDetailItem {
+  display: inline-block;
+  .size(100/6%, 100%);
+  float: left;
+  height: 100%;
+}
+
 .imagePortfolio {
   width: 100%;
   height: auto;
@@ -451,7 +462,7 @@ canvas {
   }
 }
 @import "next_prev.less";
- 
+
 @media (max-width : 1300px) {
   .portfolio-item {
     //.size((70/2vw),(70/2vw));
