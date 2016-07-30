@@ -8,6 +8,7 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     browserSync = require('browser-sync').create(),
     newer = require('gulp-newer'),
+    includer = require("gulp-x-includer"),
     htmlmin = require('gulp-htmlmin'),
     htmlreplace = require('gulp-html-replace'),
     LessAutoprefix = require('less-plugin-autoprefix'),
@@ -99,6 +100,7 @@ gulp.task('less', function(){
 
 gulp.task('html', function() {
   gulp.src(Ruta.src + '*.html')
+    .pipe(includer())
     .pipe(htmlreplace({
         'css':  Ruta.styles + NameFile.minifiedCss,
         'js':  Ruta.js + NameFile.minifiedLibsJs

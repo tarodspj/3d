@@ -33,6 +33,7 @@
     "gulp-svgstore": "^6.0.0",
     "gulp-uglify": "^1.5.4",
     "gulp-watch": "^4.3.8",
+    "gulp-x-includer": "^0.1.2",
     "imagemin-gifsicle": "^5.1.0",
     "imagemin-jpegtran": "^5.0.2",
     "imagemin-pngquant": "^5.0.0",

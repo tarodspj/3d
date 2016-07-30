@@ -77,7 +77,7 @@ for(var i = 0; i < manyCubes; ++i){
     material.opacity = 1;
   } else {
     //var material = new THREE.MeshLambertMaterial({color: 0x7a7e83});
-    var material = new THREE.MeshLambertMaterial({color: 0x91CEFF});
+    var material = new THREE.MeshLambertMaterial({color: 0xffffff});
 
     material.opacity = 1;
     material.transparent = true;
@@ -99,7 +99,7 @@ camera.position.set(0,3,10);
 
 //lights
 var light1 = new THREE.DirectionalLight(0xffffff, 1),
-luzAmbiente = new THREE.AmbientLight(0x3881FF, 0.5);
+luzAmbiente = new THREE.AmbientLight(0x99dfff, 0.3);
 
 light1.position.set(1.5, 2, 1);
 
