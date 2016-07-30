@@ -11,6 +11,8 @@
 @colorText3:    @colorBg2;
 @colorText4:    #555555;
 
+@cuantosTrabajos: 8;
+
 @timeDraw:      2.5s;
 @delayDraw:     1s;
 
@@ -19,6 +21,7 @@ html {
 }
 html,body{
   min-height: 100%;
+  // overflow: hidden;
 }
 body {
 	overflow-x: hidden;
@@ -175,7 +178,7 @@ canvas {
 }
 
 .menuSocial {
-  .absoluteBottomLeft(2rem,0);
+  .absoluteBottomLeft(4rem,0);
   .size(100%,7rem);
 
   .menuItemHorizontal {
@@ -310,14 +313,12 @@ canvas {
       .filter(blur(5px));
     }
   }//hover
-  a {
-    display: block;
-  }
 }//porfolio item
 
 .portfolio-link {
   transition: -webkit-filter .6s ease, filter .6s ease;
   will-change: -webkit-filter, filter;
+  display: inline;
 }
 
 .hoverWork {
@@ -330,6 +331,7 @@ canvas {
   cursor: pointer;
   transition: transform .4s ease;
 }
+
 .titleWork {
   display: block;
   color: white;
@@ -392,7 +394,7 @@ canvas {
 .portfolioDetailContainer {
   overflow: hidden;
   .absoluteTopLeft;
-  .size(100*6%, 100%);
+  .size(@cuantosTrabajos * 100%, 100%);
   transition: transform .5s ease-out;
 }
 .portfolioDetail {
@@ -414,7 +416,7 @@ canvas {
 }
 .portfolioDetailItem {
   display: inline-block;
-  .size(100/6%, 100%);
+  .size(100%/@cuantosTrabajos, 100%);
   float: left;
   height: 100%;
 }
@@ -425,9 +427,23 @@ canvas {
 }
 .titlePortfolioDetail {
   font-size: 3rem;
-  margin: 10vh auto;
+  margin: 10vh auto 2vh;
   text-align: center;
   font-weight: bold;
+}
+
+@import "tooltip.less";
+
+.awardsListDetail {
+  width: 100%;
+  display: block;
+  margin-bottom: 3vh;
+  //overflow: hidden;
+  text-align: center;
+  .awardIco {
+    bottom: 0;
+    float: none;
+  }
 }
 
 .anchorDetailPortfolio {
@@ -525,4 +541,27 @@ canvas {
     html {
         font-size: 15px;
     }
+}
+//ipad
+@media only screen
+and (min-width : 768px)
+and (max-width : 860px) {
+  .portfolio-item {
+    .size((70/3vw),(70/3vw));
+    &:nth-last-child(1),
+    &:nth-last-child(2) {
+      width: 70/2vw;
+      .projectImg {
+        display: block;
+        .size(auto, 100%);
+        margin: 0 auto;
+      }
+    }
+    &:nth-last-child(1){
+      background-color: #000000;
+    }
+    &:nth-last-child(2) {
+      background-color: #ee237f;
+    }
+  }
 }

@@ -1,0 +1,48 @@
+
+@bgColorToolTip: #cacaca;
+.tooltip {
+	display: inline;
+	position: relative;
+	z-index: 999;
+}
+
+.tooltip-content {
+	position: absolute;
+	background-color: @bgColorToolTip;
+	z-index: 9999;
+	width: 23rem;
+  bottom: 169%;
+  margin-left: -12.4rem;
+  padding: 2rem;
+  opacity: 0;
+  cursor: default;
+  font-size: 1.3rem;
+	text-align: center;
+	color: #fff;
+	line-height: 1.4;
+	pointer-events: none;
+	transform: scale3d(0.1,0.2,1);
+	transform-origin: 50% 120%;
+	transition: opacity 0.4s, transform 0.4s;
+	transition-timing-function: ease, cubic-bezier(0.6,0,0.4,1);
+}
+
+.awardsListDetail .awardIco:hover .tooltip-content {
+	opacity: 1;
+	pointer-events: auto;
+	transform: scale3d(1,1,1);
+}
+
+/* Arrow */
+
+.tooltip-content::after {
+	content: '';
+	position: absolute;
+	width: 16px;
+	height: 16px;
+	left: 50%;
+	margin-left: -8px;
+	top: 100%;
+	background-color: @bgColorToolTip;
+	transform: translate3d(0,-60%,0) rotate3d(0,0,1,45deg);
+}

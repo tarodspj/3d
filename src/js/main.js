@@ -5,7 +5,7 @@ scrolling;
 
 var rtime,
     timeout = false,
-    delta = 300;
+    delta = 500;
 
 var distance = 0,
     floorRotation = 3,
@@ -13,7 +13,7 @@ var distance = 0,
     easingAmount = 0.0007,
     manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
 
-var manyWorks = 6,
+var manyWorks = 8,
     actualWork = 0;
 
 if (manyCubes > 1000 ){
@@ -68,7 +68,6 @@ function goesToWork(whatWork) {
   var howMuchToMove = whatWork * (100 / manyWorks);
   $('#portfolioDetailContainer').css('transform', 'translateX(-' + howMuchToMove + '%)');
 }
-
 
 
 function onWindowResize() {
