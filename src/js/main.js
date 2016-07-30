@@ -42,9 +42,29 @@ function goesTo(where) {
    });
 }
 
+function changesTitles(){
+  var nextElement = actualWork + 2,
+      prevElement = actualWork;
+  if (actualWork === 0){
+    prevElement = manyWorks;
+  }
+  if (actualWork === (manyWorks - 1)){
+    nextElement = 1;
+  }
+
+  var tituloPrevio = $('#portfolioDetailContainer li:nth-child(' + prevElement + ')').attr('data-title'),
+      tituloSiguient = $('#portfolioDetailContainer li:nth-child(' + nextElement + ')').attr('data-title');
+
+  $('#titlePrev').html(tituloPrevio);
+  $('#titleNext').html(tituloSiguient);
+}
+
 function goesToWork(whatWork) {
-  console.log('this work' + whatWork);
+  //console.log('this work' + whatWork);
   actualWork = whatWork;
+
+  changesTitles();
+
   var howMuchToMove = whatWork * (100 / manyWorks);
   $('#portfolioDetailContainer').css('transform', 'translateX(-' + howMuchToMove + '%)');
 }
