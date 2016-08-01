@@ -1,9 +1,9 @@
 var animationJs, widthCanvas, heightCanvas, actualSection = 0,
 actualSectionName = 'section0',
 controlScroll = true,
-scrolling;
+onMovement = false;
 
-var rtime,
+var rtime = 0,
     timeout = false,
     delta = 500;
 
@@ -34,12 +34,20 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 $('#section0').append(renderer.domElement);
 
 function goesTo(where) {
-  controlScroll = false;
-  $('html, body').animate({
-       scrollTop: $('#' + where).offset().top
-   }, 600, function(){
-     afterScroll();
-   });
+  //controlScroll = false;
+  console.log('gogo');
+  if(onMovement === false) {
+    onMovement = true;
+    console.log('really gogo');
+    $('body').animate({
+         scrollTop: $('#' + where).offset().top
+     }, 600, function(){
+       actualSection = where;
+       console.log('goes' + where);
+       afterScroll();
+     });
+  }
+
 }
 
 function changesTitles(){
@@ -172,6 +180,7 @@ function toggleMenu() {
 function closeMenu() {
   $('#menu').removeClass('menuActive');
   $('#burguer').removeClass('menuActive');
+  onMovement = false;
 }
 function togglePortfolioDetail() {
   $('#portfolioDetail').toggleClass('active');
@@ -182,7 +191,7 @@ function closePortfolioDetail() {
 }
 
 function afterScroll() {
-
+  //onMovement = false;
   closeMenu();
   //smoothScroll.destroy();
   console.log('afterScroll');
@@ -191,20 +200,17 @@ function afterScroll() {
 
 function onScroll() {
 
-  var $scrollTop = $(this).scrollTop();
+  var $scrollTop = $(this).scrollTop(),
+  actualScroll = $(window).scrollTop();
 
   camera.position.y = 3 - ($scrollTop / 300);
+  var cuantoScroll = actualScroll - (actualSection * heightCanvas),
+    destination = '';
 
-  if (controlScroll) {
+  if (controlScroll === true && (Math.abs(cuantoScroll) > 6)) {
     controlScroll = false;
-    actualScroll = $(window).scrollTop();
+    onChange = true;
 
-    var cuantoScroll = actualScroll - (actualSection * heightCanvas),
-      destination = '';
-      if (Math.abs(cuantoScroll) < 1) {
-        goesTo(actualSectionName);
-
-      } else { //suficiente scroll como para cambiar
         if (cuantoScroll < 0) {
           actualSection = actualSection - 1;
           actualSectionName = 'section' + actualSection;
@@ -218,7 +224,7 @@ function onScroll() {
           goesTo(actualSectionName);
 
         }
-      } //suficiente como para cambiar
+      //} //suficiente como para cambiar
 
       if (actualSection === 0) {
         animationJs = requestAnimationFrame(render);
@@ -238,9 +244,17 @@ function resizeend() {
     }
 }
 
+function unbindScroll() {
+  $(window).unbind('scroll',function(){
+    controlScroll = true;
+    if(onMovement === false){
+      onScroll();
+    }
+  });
+}
+
 $(document).ready(function() {
   render();
-
   $('.enlaceMenu').on('click', function(){
     var whereToGo = $(this).attr('data-scroll');
     if(whereToGo === actualSectionName) {
@@ -254,15 +268,12 @@ $(document).ready(function() {
 
   onWindowResize();
 
-  window.onscroll = onScroll;
-
   $('#burguer').on('click', function() { //show hide menu
     toggleMenu();
   });
 
   $('#contentWork .portfolio-item').on('click', function() {
     var workToSee = $(this).index();
-    controlScroll = true;
     goesToWork(workToSee);
     togglePortfolioDetail();
   });
@@ -284,6 +295,12 @@ $(document).ready(function() {
     goesToWork(workToSee);
   });
 
+  $(window).scroll($.debounce( 250, function(){
+    controlScroll = true;
+    if(onMovement === false) {
+      onScroll();
+    }
+  }));
 
   $('#closeDetail').on('click', function() {
     togglePortfolioDetail();
@@ -297,17 +314,5 @@ $(document).ready(function() {
         setTimeout(resizeend, delta);
     }
   });
-
-
-  // document.onkeypress = function myFunction() {
-  //   switch (event.keyCode) {
-  //   case 13:
-  //       console.log("Up key is pressed");
-  //       break;
-  //   case 38:
-  //       console.log("Down key is pressed");
-  //       break;
-  //   }
-  // };
 
 });

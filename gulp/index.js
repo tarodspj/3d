@@ -41,11 +41,13 @@ var gulp = require('gulp'),
       minifiedLibsJs: 'libs.js'
     },
     orderToJsBuid = [
-      Ruta.src + Ruta.js + 'jquery.custom.js'
+      Ruta.src + Ruta.js + 'jquery.custom.js',
+      Ruta.src + Ruta.js + 'jquery.ba-throttle-debounce.js'
     ],
     orderToJsDev = [
       //Ruta.src + Ruta.js + 'three.min.js',
-      Ruta.src + Ruta.js + 'jquery.custom.js'
+      Ruta.src + Ruta.js + 'jquery.custom.js',
+      Ruta.src + Ruta.js + 'jquery.ba-throttle-debounce.js'
     ],
     orderToJs = orderToJsDev,
     destino = Ruta.dev,
