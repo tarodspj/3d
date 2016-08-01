@@ -34,16 +34,13 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 $('#section0').append(renderer.domElement);
 
 function goesTo(where) {
-  //controlScroll = false;
-  console.log('gogo');
+
   if(onMovement === false) {
     onMovement = true;
-    console.log('really gogo');
     $('body').animate({
          scrollTop: $('#' + where).offset().top
      }, 600, function(){
-       actualSection = where;
-       console.log('goes' + where);
+       actualSection = parseInt(where.slice(7), 10);
        afterScroll();
      });
   }
@@ -68,7 +65,6 @@ function changesTitles(){
 }
 
 function goesToWork(whatWork) {
-  //console.log('this work' + whatWork);
   actualWork = whatWork;
 
   changesTitles();
@@ -191,10 +187,7 @@ function closePortfolioDetail() {
 }
 
 function afterScroll() {
-  //onMovement = false;
   closeMenu();
-  //smoothScroll.destroy();
-  console.log('afterScroll');
   controlScroll = true;
 }
 
@@ -206,9 +199,9 @@ function onScroll() {
   camera.position.y = 3 - ($scrollTop / 300);
   var cuantoScroll = actualScroll - (actualSection * heightCanvas),
     destination = '';
-
   if (controlScroll === true && (Math.abs(cuantoScroll) > 6)) {
     controlScroll = false;
+
     onChange = true;
 
         if (cuantoScroll < 0) {
