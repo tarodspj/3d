@@ -26,10 +26,11 @@ scene.fog = new THREE.FogExp2(0xffffff, 0.13);
 var camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 15);
 
 var renderer = new THREE.WebGLRenderer({
-  antialias:true
+  antialias:true,
+  alpha: true
 });
 
-renderer.setClearColor(0xffffff);
+//renderer.setClearColor(0x2253a2);
 renderer.setSize(window.innerWidth, window.innerHeight);
 $('#section0').append(renderer.domElement);
 
@@ -50,18 +51,18 @@ function goesTo(where) {
 function changesTitles(){
   var nextElement = actualWork + 2,
       prevElement = actualWork;
-  if (actualWork === 0){
+
+  if (actualWork === 0) {
     prevElement = manyWorks;
-  }
-  if (actualWork === (manyWorks - 1)){
+  } else if (actualWork === (manyWorks - 1)) {
     nextElement = 1;
   }
 
-  var tituloPrevio = $('#portfolioDetailContainer li:nth-child(' + prevElement + ')').attr('data-title'),
-      tituloSiguient = $('#portfolioDetailContainer li:nth-child(' + nextElement + ')').attr('data-title');
+  var tituloPrevio = $('#portfolioDetailContainer .portfolioDetailItem:nth-child(' + prevElement + ')').attr('data-title'),
+      tituloSiguiente = $('#portfolioDetailContainer .portfolioDetailItem:nth-child(' + nextElement + ')').attr('data-title');
 
   $('#titlePrev').html(tituloPrevio);
-  $('#titleNext').html(tituloSiguient);
+  $('#titleNext').html(tituloSiguiente);
 }
 
 function goesToWork(whatWork) {
@@ -108,7 +109,7 @@ for(var i = 0; i < manyCubes; ++i){
         //transparent: true
     } );
   if( i % 11 === 0) {
-    var material = new THREE.MeshLambertMaterial({color: 0xFF0000});
+    var material = new THREE.MeshLambertMaterial({color: 0xe11218});
     material.opacity = 1;
   } else {
     //var material = new THREE.MeshLambertMaterial({color: 0x7a7e83});
@@ -134,7 +135,7 @@ camera.position.set(0,3,10);
 
 //lights
 var light1 = new THREE.DirectionalLight(0xffffff, 1),
-luzAmbiente = new THREE.AmbientLight(0x99dfff, 0.3);
+luzAmbiente = new THREE.AmbientLight(0xd1e6f9, 0.3);
 
 light1.position.set(1.5, 2, 1);
 
