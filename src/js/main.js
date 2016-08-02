@@ -143,8 +143,8 @@ scene.add(light1);
 scene.add(luzAmbiente);
 
 light1 = new THREE.DirectionalLight(0x3881FF, 0.5);
-scene.add(light1);
-light1.position.set(-1.5,2,1);
+//scene.add(light1);
+light1.position.set(-1.5,2,2.2);
 
 function render() {
   // onWindowResize();
@@ -200,7 +200,7 @@ function onScroll() {
   camera.position.y = 3 - ($scrollTop / 300);
   var cuantoScroll = actualScroll - (actualSection * heightCanvas),
     destination = '';
-  if (controlScroll === true && (Math.abs(cuantoScroll) > 6)) {
+  if (controlScroll === true && (Math.abs(cuantoScroll) > 4)) {
     controlScroll = false;
 
     onChange = true;
@@ -289,7 +289,7 @@ $(document).ready(function() {
     goesToWork(workToSee);
   });
 
-  $(window).scroll($.debounce( 250, function(){
+  $(window).scroll($.debounce( 100, function(){
     controlScroll = true;
     if(onMovement === false) {
       onScroll();
