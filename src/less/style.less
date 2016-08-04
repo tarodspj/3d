@@ -456,7 +456,7 @@ canvas {
 .anchorDetailPortfolio {
   display: block;
   position: relative;
-  margin: 10vh auto;
+  margin: 8vh auto 14vh auto;
   width: 30%;
   min-width: 2.5rem;
   padding: 2rem 0;
@@ -565,6 +565,14 @@ canvas {
       font-size: 2.4rem;
     }
 }
+@media (max-height : 900px) {
+  .nav-fillpath {
+    .button, .close {
+      transform: translateY(-30%);
+    }
+  }
+}
+
 //ipad
 @media only screen
 and (min-width : 768px)

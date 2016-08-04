@@ -32,7 +32,8 @@ var gulp = require('gulp'),
       less: 'less/',
       styles: 'css/',
       js: 'js/',
-      img: 'img/'
+      img: 'img/',
+      mail: 'mail/'
     },
     NameFile = {
       myJs: 'main.js',
@@ -66,7 +67,7 @@ gulp.task('start', ['watch']);
 gulp.task('dev', function(callback){
     destino = Ruta.dev;
     orderToJs = orderToJsDev;
-    runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
+    runSequence(['less', 'html', 'image-min', 'copy-svg', 'copy-php'], 'concat-scripts', 'minify-js', callback);
     //runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
     //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
     //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
@@ -158,6 +159,11 @@ gulp.task('copy-svg', function() {
     gulp.src(Ruta.src + Ruta.img +'**/*.svg')
     .pipe(newer(destino + Ruta.img))
     .pipe(gulp.dest(destino + Ruta.img));
+});
+gulp.task('copy-php', function() {
+    gulp.src(Ruta.src + Ruta.mail +'**/*.php')
+    .pipe(newer(destino + Ruta.mail))
+    .pipe(gulp.dest(destino + Ruta.mail));
 });
 
 function callback(){

@@ -36,7 +36,15 @@
 	    vertical-align: middle;
 	    vertical-align: baseline;
 	    opacity: 0;
-	    transition: top 0.3s ease,opacity 0.3s ease, border-radious 0.4s ease 0.3s;
+	    transition: top 0.3s ease,opacity 0.3s ease, border-radious 0.4s ease 0.3s background-color .3s ease;
+    }
+    &.error {
+      label {
+        background-color: @colorBg2;
+        top: 0;
+  	    opacity: 1;
+        border-radius: 3px;
+      }
     }
 
 }
@@ -47,9 +55,6 @@
 	    opacity: 1;
       border-radius: 3px;
 	}
-  input, textarea {
-    border-radius: 0px 3px 0 3px;
-  }
 }
 
 .btn {
@@ -61,13 +66,20 @@
   font-size: 1.3rem;
   color: white;
   border-radius: 3px;
-  opacity: .4;
+  opacity: .8;
   transition: opacity .3s ease;
   cursor: default;
-  &.validate {
+  &:hover {
     opacity: 1;
     cursor: pointer;
   }
+}
+
+#success {
+  cursor: pointer;
+}
+.alert-success strong {
+  margin-left: 8px
 }
 
 // .floating-label-form-group-with-focus {

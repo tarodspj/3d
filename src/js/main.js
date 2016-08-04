@@ -238,17 +238,90 @@ function resizeend() {
     }
 }
 
-function unbindScroll() {
-  $(window).unbind('scroll',function(){
-    controlScroll = true;
-    if(onMovement === false){
-      onScroll();
-    }
-  });
-}
+function validateExpresion(tipo, valor) {
+  var RegExPattern;
 
-$(document).ready(function() {
-  render();
+  if(tipo === 'email') {
+    RegExPattern = /^[a-zA-Z0-9]{1}[a-zA-Z0-9._-]+@[a-zA-Z0-9]+[a-zA-Z0-9-_]+[a-zA-Z0-9]+.[a-zA-Z]{2,6}$/;
+  } else {
+    RegExPattern = /^[6-9]{1}[0-9]{8}$/; // telefono
+  }
+    if ((valor.match(RegExPattern)) && (valor !== '')) {
+        return true;
+    } else {
+        return false;
+    }
+}
+function validateElement($element) {
+  var noError = true,
+      inputToCheck = $element.find('input, textarea');
+
+  if(inputToCheck.attr('required')) {
+    if(inputToCheck.prop('type') === 'email') {
+      noError = validateExpresion('email', inputToCheck.val());
+    } else {
+      if (inputToCheck.val().length < 10) {
+        noError = false;
+      }
+      else {
+        noError = true;
+      }
+    } //textarea
+  } //required
+
+  if(!noError) {
+    $element.addClass('error');
+  }
+  else {
+    $element.removeClass('error');
+  }
+
+}
+function validateForm() {
+  if($('#contactForm .error').length === 0) {
+    var name = $("input#name").val(),
+        email = $("input#email").val(),
+         phone = $("input#phone").val(),
+         message = $("textarea#message").val();
+
+    $.ajax({
+       url: "././mail/contact_me.php",
+       type: "POST",
+       data: {
+           name: name,
+           phone: phone,
+           email: email,
+           message: message
+       },
+       cache: false,
+       success: function() {
+           // Enable button & show success message
+           $("#btnSubmit").attr("disabled", false);
+           $('#success').html("<div class='alert alert-success'>");
+           $('#success > .alert-success')
+               .append("😘 <strong>Your message has been sent. </strong>");
+           $('#success > .alert-success')
+               .append('</div>');
+
+           //clear all fields
+           $('#contactForm').trigger("reset");
+       },
+       error: function() {
+           // Fail message
+           $('#success').html("<div class='alert alert-danger'>");
+           $('#success > .alert-danger').append("😓 <strong>Sorry " + name + ", it seems that my mail server is not responding. Please try again later!");
+           $('#success > .alert-danger').append('</div>');
+           //clear all fields
+           $('#contactForm').trigger("reset");
+       },
+   });
+  }
+} //validateForm
+
+function listeners() {
+  $('#burguer').on('click', function() { //show hide menu
+    toggleMenu();
+  });
   $('.enlaceMenu').on('click', function(){
     var whereToGo = $(this).attr('data-scroll');
     if(whereToGo === actualSectionName) {
@@ -259,16 +332,16 @@ $(document).ready(function() {
       goesTo(whereToGo);
     }
   });
-
-  onWindowResize();
-
-  $('#burguer').on('click', function() { //show hide menu
-    toggleMenu();
+  $('.titleSectionContainer').on('click', function(){
+    closeMenu();
   });
 
   $('#contentWork .portfolio-item').on('click', function() {
     var workToSee = $(this).index();
     goesToWork(workToSee);
+    togglePortfolioDetail();
+  });
+  $('#closeDetail').on('click', function() {
     togglePortfolioDetail();
   });
   $('#buttonNext').on('click', function() {
@@ -289,24 +362,38 @@ $(document).ready(function() {
     goesToWork(workToSee);
   });
 
+  $('#contactForm').on('input propertychange', '.floating-label-form-group', function(e) {
+      $(this).toggleClass('floating-label-form-group-with-value', !! $(e.target).val());
+  }).on('focus', '.floating-label-form-group', function() {
+      $(this).addClass('floating-label-form-group-with-focus');
+  }).on('blur', '.floating-label-form-group', function() {
+      $(this).removeClass('floating-label-form-group-with-focus');
+      //console.log($(this).find('input, textarea').attr('id'));
+      validateElement($(this));
+  }).on('keypress','.floating-label-form-group', function() {
+    var $elementForm = $(this);
+    if($elementForm.hasClass('error')){
+      validateElement($(this));
+    }
+
+  });
+
+  $('#sendForm').on('click', function() {
+    $('.floating-label-form-group').each(function(index) {
+      validateElement($(this));
+    });
+    validateForm();
+  });
+  $('#success').on('click',function(){
+    $(this).html('');
+  });
+
   $(window).scroll($.debounce( 100, function(){
     controlScroll = true;
     if(onMovement === false) {
       onScroll();
     }
   }));
-
-  $('#closeDetail').on('click', function() {
-    togglePortfolioDetail();
-  });
-
-  $("body").on("input propertychange", ".floating-label-form-group", function(e) {
-        $(this).toggleClass("floating-label-form-group-with-value", !! $(e.target).val());
-    }).on("focus", ".floating-label-form-group", function() {
-        $(this).addClass("floating-label-form-group-with-focus");
-    }).on("blur", ".floating-label-form-group", function() {
-        $(this).removeClass("floating-label-form-group-with-focus");
-    });
 
   $(window).on('resize', function () {
     controlScroll = false;
@@ -316,5 +403,10 @@ $(document).ready(function() {
         setTimeout(resizeend, delta);
     }
   });
+}
 
+$(document).ready(function() {
+  render();
+  onWindowResize();
+  listeners();
 });
