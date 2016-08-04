@@ -38,7 +38,7 @@ function goesTo(where) {
 
   if(onMovement === false) {
     onMovement = true;
-    $('body').animate({
+    $('body,html').animate({
          scrollTop: $('#' + where).offset().top
      }, 600, function(){
        actualSection = parseInt(where.slice(7), 10);
