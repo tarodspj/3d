@@ -11,7 +11,7 @@ var distance = 0,
     floorRotation = 3,
     cameraPosition = 6,
     easingAmount = 0.0007,
-    manyCubes = window.innerWidth - 90; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
+    manyCubes = window.innerWidth - 190; //pantalla mas pequeña, menos potencia normalmente a ver si se nota el cambio en movil
 
 var manyWorks = 8,
     actualWork = 0;
@@ -81,7 +81,7 @@ function onWindowResize() {
   camera.aspect = widthCanvas / heightCanvas;
   camera.updateProjectionMatrix();
   renderer.setSize( widthCanvas, heightCanvas);
-  $('#section0').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
+  //$('#section0').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
   $('.section').css({'height': heightCanvas + 'px'});
 
   //controlScroll = false;
