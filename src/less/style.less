@@ -1,14 +1,19 @@
-// out: ../css/style.css, compress: true, strictMath: false
 @import "globals.less";
+
 @colorBg1:      #fff;
 //@colorBg2:      rgba(235,152,50,1);
-@colorBg2:      #f00;
-@colorBg3:      #cacaca;
+@colorBg2:      #e11218;
+@colorBg3:      #e8e8e8;
+@colorBg4:      #629a16;
+//@colorBg4:      #feee46;
+
 
 @colorText1:    #151515;
 @colorText2:    #000000;
 @colorText3:    @colorBg2;
 @colorText4:    #555555;
+
+@cuantosTrabajos: 8;
 
 @timeDraw:      2.5s;
 @delayDraw:     1s;
@@ -18,6 +23,7 @@ html {
 }
 html,body{
   min-height: 100%;
+  // overflow: hidden;
 }
 body {
 	overflow-x: hidden;
@@ -27,6 +33,9 @@ body {
   color: @colorText1;
 }
 
+.hide {
+  display: none;
+}
 .enlace {
   color: currentColor;
   text-decoration: none;
@@ -37,7 +46,7 @@ canvas {
   top: 0;
   left: 0;
   .size;
-  //opacity: 0.5;
+  background: linear-gradient(to bottom,  #9ac5e8 10%,#fff 54%, #9ac5e8 100%);
   z-index: 1;
 }
 .gold {
@@ -49,6 +58,10 @@ canvas {
 .bronze {
   color: #c69048;
 }
+.finalista {
+  color: #295f49;
+}
+
 @widthBurguer: 5rem;
 .burguer {
   .size(@widthBurguer,@widthBurguer);
@@ -68,7 +81,7 @@ canvas {
 }
 .elementBurguer {
   //.size(80%,1px);
-  height: 1px;
+  height: 2px;
   display: block;
   margin: 1rem auto;
   background: @colorBg1;
@@ -104,7 +117,7 @@ canvas {
   position: fixed;
   top: 0;
   right: 0;
-  .transform(translateX(69vw));
+  transform: translateX(69vw);
   flex-flow: column nowrap;
   justify-content: center;
   align-items: stretch;
@@ -117,7 +130,7 @@ canvas {
   opacity: .8;
   transition: transform .8s ease, opacity .5s ease;
   &.menuActive {
-      .transform(translateX(0));
+      transform: translateX(0);
       opacity: 1;
   }
 }
@@ -167,7 +180,7 @@ canvas {
 }
 
 .menuSocial {
-  .absoluteBottomLeft(2rem,0);
+  .absoluteBottomLeft(4rem,0);
   .size(100%,7rem);
 
   .menuItemHorizontal {
@@ -214,7 +227,7 @@ canvas {
   letter-spacing: 1rem;
   z-index: 10;
   opacity: 0;
-  .animationSimpleDoble(animationIn 1s forwards ease-out 1.1s 1, animationLetterSpacing 1s forwards ease-in 1.6s 1);
+  animation: animationIn 1s forwards ease-out 1.1s 1, animationLetterSpacing 1s forwards ease-in 1.6s 1;
   //.animationSimple(animationLetterSpacing .7s forwards ease-in 1.6s 1);
 }
 
@@ -293,20 +306,44 @@ canvas {
   overflow: hidden;
   &:hover {
     .hoverWork {
+      transform: translateY(-99%);
+    }
+    .awardIco {
       transform: translateY(-100%);
     }
-  }
-  a {
-    display: block;
-  }
+    .portfolio-link {
+      .filter(blur(5px));
+    }
+  }//hover
 }//porfolio item
 
+.portfolio-link {
+  transition: -webkit-filter .6s ease, filter .6s ease;
+  will-change: -webkit-filter, filter;
+  display: inline;
+}
+
 .hoverWork {
-  .absoluteBottomLeft(-100%, 0);
-  .size;
-  background-color: rgba(0, 0, 0, .7);
+  .absoluteBottomLeft(-102%, 0);
+  .size(100%, 102%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, .5);
+  cursor: pointer;
   transition: transform .4s ease;
 }
+
+.titleWork {
+  display: block;
+  color: white;
+  width: 90%;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 3.4rem;
+  text-transform: uppercase;
+}
+
 .award {
   padding-left: 1.3em;
   background-position: .2em center;
@@ -325,7 +362,7 @@ canvas {
 }
 
 .awardsList {
-  .absoluteBottomLeft(0, 5%);
+  .absoluteBottomLeft(4px, 5%);
   .size(80%, 13%);
   overflow: hidden;
   z-index: 40;
@@ -336,9 +373,128 @@ canvas {
   margin-right: .5em;
   .size(2.3em, 100%);
   position: relative;
+  bottom: -100%;
+  transition: transform .4s ease;
+  @transitionDelay: .3s;
+  @transitionDelayChild: @transitionDelay - .1;
+  &:nth-child(1) {
+    transition-delay: @transitionDelay * 1;
+  }
+  &:nth-child(2) {
+    transition-delay: @transitionDelayChild  * 2;
+  }
+  &:nth-child(3) {
+    transition-delay: @transitionDelayChild * 3;
+  }
+  &:nth-child(4) {
+    transition-delay: @transitionDelayChild * 4;
+  }
   svg {
       fill: currentColor;
   }
+}
+.portfolioDetailContainer {
+  overflow: hidden;
+  .absoluteTopLeft;
+  .size(@cuantosTrabajos * 100%, 100%);
+  transition: transform .5s ease-out;
+}
+.portfolioDetail {
+  .absoluteTopRight;
+  height: 100%;
+  transform: translateX(70vw);
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: stretch;
+  align-content: stretch;
+  overflow: hidden;
+  .size(70vw,@heightMenu);
+  background: @colorBg4;
+  z-index: 80;
+  transition: transform .8s ease;
+  &.active {
+      transform: translateX(0);
+  }
+}
+.caseAnchor {
+  color: white;
+  text-decoration: none;
+}
+
+.portfolioDetailItem {
+  display: inline-block;
+  .size(100%/@cuantosTrabajos, 100%);
+  float: left;
+  height: 100%;
+}
+
+.imagePortfolio {
+  width: 100%;
+  height: auto;
+}
+.titlePortfolioDetail {
+  font-size: 3rem;
+  margin: 10vh auto 2vh;
+  text-align: center;
+  font-weight: bold;
+}
+
+@import "tooltip.less";
+
+.awardsListDetail {
+  width: 100%;
+  display: block;
+  margin-bottom: 3vh;
+  //overflow: hidden;
+  text-align: center;
+  .awardIco {
+    bottom: 0;
+    float: none;
+  }
+}
+
+.anchorDetailPortfolio {
+  display: block;
+  position: relative;
+  margin: 8vh auto 14vh auto;
+  width: 30%;
+  min-width: 2.5rem;
+  padding: 2rem 0;
+  background: white;
+  font-size: 1.3rem;
+  color: @colorText4;
+  text-align: center;
+  text-decoration: none;
+  border-radius: .2rem;
+  overflow: hidden;
+  transition: letter-spacing .6s ease-out;
+  &::before {
+    content: '→';
+    font-size: 2rem;
+    .absoluteTopLeft(1.7rem, 100%);
+    transition: transform .5s ease .1s;
+  }
+  &:hover {
+    letter-spacing: .12rem;
+    &::before {
+      transform: translateX(-187%);
+      //transform: translateX(-222%);
+
+      //transform: translateX(-90%);
+    }
+  }
+}
+@import "next_prev.less";
+
+@import "newsletters.less";
+
+@import "externalSection.less";
+
+@import "formulario.less";
+
+.contactForm {
+  width: 80%;
+  margin: 0 auto;
 }
 
 @media (max-width : 1300px) {
@@ -403,4 +559,44 @@ canvas {
     html {
         font-size: 15px;
     }
+}
+
+@media (max-width : 1400px) {
+    .titleSection {
+      font-size: 5.5rem;
+    }
+    .titlePortfolioDetail, .titleWork {
+      font-size: 2.4rem;
+    }
+}
+@media (max-height : 900px) {
+  .nav-fillpath {
+    .button, .close {
+      transform: translateY(-30%);
+    }
+  }
+}
+
+//ipad
+@media only screen
+and (min-width : 768px)
+and (max-width : 1040px) {
+  .portfolio-item {
+    .size((70/3vw),(70/3vw));
+    &:nth-last-child(1),
+    &:nth-last-child(2) {
+      width: 70/2vw;
+      .projectImg {
+        display: block;
+        .size(auto, 100%);
+        margin: 0 auto;
+      }
+    }
+    &:nth-last-child(1){
+      background-color: #000000;
+    }
+    &:nth-last-child(2) {
+      background-color: #ee237f;
+    }
+  }
 }

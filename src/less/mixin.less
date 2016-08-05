@@ -1,0 +1,144 @@
+.size( @width:100%,@height:100% ) {
+	width: 		@width;
+	height: 	@height;
+}
+.fullSize {
+	position: 	absolute;
+	top: 		0;
+	bottom:  	0;
+	left: 		0;
+	right: 		0;
+	display: 	block;
+}
+
+.anti-alias {
+  font-smooth: always;
+  font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;
+  -moz-font-smoothing: antialiased;
+}
+.gradient (@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+	background: -ms-linear-gradient(top, @startColor, @endColor);
+	background: -o-linear-gradient(top, @startColor, @endColor);
+	background: linear-gradient(to right, @startColor 0%, @endColor 100%);
+}
+.comunArrows{
+	width: 		0;
+	height: 	0;
+	position: 	relative;
+	line-height:	0px; //para ie8
+}
+
+.arrowUp(@color: @gray, @size: 5px,@x:0,@y:0,@margin: 0) {
+	.comunArrows;
+
+	margin: 	@margin;
+	border-top: 	@size solid transparent;
+	border-left: 	@size solid transparent;
+        border-right: 	@size solid transparent;
+        border-bottom: 	@size solid @color;
+}
+.arrowDown(@color: @gray, @size: 5px,@x:0,@y:0,@margin: 0) {
+	.comunArrows;
+
+	margin: 	@margin;
+	border-top: 	@size solid @color;
+	border-left: 	@size solid transparent;
+        border-right: 	@size solid transparent;
+        border-bottom: 	@size solid transparent;
+}
+.arrowLeft(@color: @gray, @size: 5px,@x:0,@y:0,@margin: 0) {
+	.comunArrows;
+
+	margin: 	@margin;
+	border-top: 	@size solid transparent;
+	border-left: 	@size solid transparent;
+        border-right: 	@size solid @color;
+        border-bottom: 	@size solid transparent;
+}
+.arrowRight(@color: @gray, @size: 5px,@x:0,@y:0,@margin: 0) {
+	.comunArrows;
+
+	margin: 	@margin;
+	border-top: 	@size solid transparent;
+	border-left: 	@size solid @color;
+        border-right: 	@size solid transparent;
+        border-bottom: 	@size solid transparent;
+}
+.absoluteTopLeft(@top:0, @left:0) {
+	position: 	absolute;
+	top: 		@top;
+	left: 		@left;
+	display: 	block;
+}
+.absoluteTopRight(@top:0, @right:0) {
+	position: 	absolute;
+	top: 		@top;
+	right: 		@right;
+	display: 	block;
+}
+.absoluteBottomRight(@bottom:0, @right:0) {
+	position: 	absolute;
+	bottom: 	@bottom;
+	right: 		@right;
+	display: 	block;
+}
+.absoluteBottomLeft(@bottom:0, @left:0) {
+	position: 	absolute;
+	bottom: 	@bottom;
+	left: 		@left;
+	display: 	block;
+}
+.fontSize(@size){
+	font-size: 	@size;
+	line-height: 	@size;
+}
+.fontSizeLh(@size,@Lh){
+	font-size: 	@size;
+	line-height: 	@Lh;
+}
+.sprite(@url, @width, @height, @x, @y){
+	background-image: 	url(@url);
+	width: 			@width;
+	height: 		0;
+	padding-top: 		@height;
+	background-position: 	@x @y;
+
+}
+.filter(@effect){
+	  -webkit-filter: @effect;
+		filter: @effect;
+}
+.hex-to-rgba (@color, @alpha: 1) {
+	@hex-to-rgba-red: red(@color);
+	@hex-to-rgba-green: green(@color);
+	@hex-to-rgba-blue: blue(@color);
+	@rgba: rgba(@hex-to-rgba-red, @hex-to-rgba-green, @hex-to-rgba-blue, @alpha);
+}
+
+.animatedOut{
+    to { opacity: 0; }
+}
+@keyframes animationOut {
+    .animatedOut;
+}
+//animated OUT -----------------------------
+
+.animatedIn{
+    to { opacity: 1; }
+}
+@keyframes animationIn {
+    .animatedIn;
+}
+
+
+.animatedLetterSpacing{
+    to { letter-spacing: 8rem; }
+}
+@keyframes animationLetterSpacing {
+  .animatedLetterSpacing;
+}

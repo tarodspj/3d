@@ -1,0 +1,166 @@
+@widthButtons: 9vh;
+@heightButtons: @widthButtons;
+.nav-fillpath {
+		display: block;
+    position: absolute;
+    bottom: 0;
+		width: 100%;
+	.button {
+		width: @widthButtons;
+		height: @heightButtons;
+		position: absolute;
+		bottom: 0;
+		display: block;
+		outline: none;
+		text-align: left;
+		z-index: 1000;
+		transform: translateY(-50%);
+		cursor: pointer;
+		&.prev {
+			left: 0;
+		}
+
+		&.next {
+			right: 0;
+		}
+	} //.button
+	h3 {
+		position: absolute;
+		width: 10rem;
+		top: 50%;
+		margin: 0;
+		color: #fff;
+		text-transform: uppercase;
+		font-weight: 300;
+		font-size: 1.1rem;
+		opacity: 0;
+		transition: transform 0.3s, opacity 0.3s;
+	}
+	.icon-wrap {
+		position: relative;
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+	.close {
+		display: block;
+		position: relative;
+		width: @widthButtons;
+		height: @heightButtons;
+		margin: 0 auto;
+		transform: translateY(-50%);
+		cursor: pointer;
+		&::before {
+    transform: rotate(-45deg);
+		}
+		&::after {
+    transform: rotate(45deg);
+		}
+		&::before, &::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 1px;
+    background-color: rgba(255,255,255,0.4);
+    left: 25%;
+    top: 50%;
+		transition: height .5s ease-in, background-color .6s ease-in .1s;
+		}
+		&:hover {
+			&::before, &::after {
+				height: 9px;
+				background-color: rgba(255,255,255,1);
+			}
+		}
+	} //close
+} //.nav-fillpath
+
+.nav-fillpath .button::before,
+.nav-fillpath .button::after,
+.nav-fillpath .icon-wrap::before,
+.nav-fillpath .icon-wrap::after {
+	position: absolute;
+	left: 50%;
+	width: 3px;
+	height: 50%;
+	background: #295f49;
+	content: '';
+	transition: transform 0.3s;
+	backface-visibility: hidden;
+}
+
+.nav-fillpath .icon-wrap::before,
+.nav-fillpath .icon-wrap::after {
+	z-index: 100;
+	height: 0;
+	background: #fff;
+	transition: height 0.3s, transform 0.3s;
+}
+
+.nav-fillpath .button::before,
+.nav-fillpath .icon-wrap::before {
+	top: 50%;
+	transform: translateX(-50%) rotate(-135deg);
+	transform-origin: 50% 0%;
+}
+
+.nav-fillpath .button.next::before,
+.nav-fillpath .button.next .icon-wrap::before {
+	transform: translateX(-50%) rotate(135deg);
+	transform-origin: 50% 0%;
+}
+
+.nav-fillpath .button::after,
+.nav-fillpath .icon-wrap::after {
+	top: 50%;
+	transform: translateX(-50%) rotate(-45deg);
+	transform-origin: 0 0;
+}
+
+.nav-fillpath .button.next::after,
+.nav-fillpath .button.next .icon-wrap::after {
+	transform: translateX(-50%) rotate(45deg);
+	transform-origin: 100% 0%;
+}
+
+
+.nav-fillpath .button.prev h3 {
+	left: 100%;
+	transform: translateY(-50%) translateX(-50%);
+}
+
+.nav-fillpath .button.next h3 {
+	right: 100%;
+	text-align: right;
+	transform: translateY(-50%) translateX(50%);
+}
+
+.nav-fillpath .button:hover .icon-wrap::before,
+.nav-fillpath .button:hover .icon-wrap::after {
+	height: 50%;
+}
+
+.nav-fillpath .button:hover::before,
+.nav-fillpath .button:hover .icon-wrap::before {
+	transform: translateX(-50%) rotate(-125deg);
+}
+
+.nav-fillpath .button.next:hover::before,
+.nav-fillpath .button.next:hover .icon-wrap::before {
+	transform: translateX(-50%) rotate(125deg);
+}
+
+.nav-fillpath .button:hover::after,
+.nav-fillpath .button:hover .icon-wrap::after {
+	transform: translateX(-50%) rotate(-55deg);
+}
+
+.nav-fillpath .button.next:hover::after,
+.nav-fillpath .button.next:hover .icon-wrap::after {
+	transform: translateX(-50%) rotate(55deg);
+}
+
+.nav-fillpath .button:hover h3 {
+	opacity: 1;
+	transform: translateY(-50%) translateX(0);
+}
