@@ -23,7 +23,7 @@ html {
 }
 html,body{
   min-height: 100%;
-  // overflow: hidden;
+  overflow-x: hidden;
 }
 body {
 	overflow-x: hidden;
@@ -232,7 +232,7 @@ canvas {
 }
 
 .wrapper{
-  .size(100%,2000px);
+  .size(100%,auto);
 }
 
 .titleSectionContainer {
@@ -402,13 +402,13 @@ canvas {
 .portfolioDetail {
   .absoluteTopRight;
   height: 100%;
-  transform: translateX(70vw);
+  transform: translateX(100vw);
   flex-flow: column nowrap;
   justify-content: center;
   align-items: stretch;
   align-content: stretch;
   overflow: hidden;
-  .size(70vw,@heightMenu);
+  .size(100vw,@heightMenu);
   background: @colorBg4;
   z-index: 80;
   transition: transform .8s ease;
@@ -578,9 +578,7 @@ canvas {
 }
 
 //ipad
-@media only screen
-and (min-width : 768px)
-and (max-width : 1040px) {
+@media only screen and (max-width : 1040px) {
   .portfolio-item {
     .size((70/3vw),(70/3vw));
     &:nth-last-child(1),
