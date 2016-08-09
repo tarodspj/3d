@@ -1,7 +1,8 @@
 var animationJs, widthCanvas, heightCanvas, actualSection = 0,
 actualSectionName = 'section0',
 controlScroll = true,
-onMovement = false;
+onMovement = false,
+isMob = false;
 
 var rtime = 0,
     timeout = false,
@@ -85,7 +86,10 @@ function onWindowResize() {
   $('.section').css({'height': heightCanvas + 'px'});
 
   //controlScroll = false;
-  goesTo(actualSectionName);
+  if(!isMob) {
+    goesTo(actualSectionName);
+  }
+
 }
 
 //Floor
@@ -405,8 +409,26 @@ function listeners() {
   });
 }
 
+function detectmob() {
+ if( navigator.userAgent.match(/Android/i)
+ || navigator.userAgent.match(/webOS/i)
+ || navigator.userAgent.match(/iPhone/i)
+ || navigator.userAgent.match(/iPad/i)
+ || navigator.userAgent.match(/iPod/i)
+ || navigator.userAgent.match(/BlackBerry/i)
+ || navigator.userAgent.match(/Windows Phone/i)
+ ){
+    return true;
+  }
+ else {
+    return false;
+  }
+}
+
 $(document).ready(function() {
   render();
+  isMob = detectmob();
+  console.log(isMob);
   onWindowResize();
   listeners();
 });

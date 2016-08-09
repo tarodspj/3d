@@ -16,6 +16,14 @@ and (orientation: portrait) {
       text-align: left;
       margin-left: 3em;
     }
+    .menuActive {
+      .elementBurguer1 {
+        transform: rotate(405deg) translateX(.8rem) translateY(1rem)
+      }
+      .elementBurguer3 {
+        transform: rotate(-405deg) translateX(1rem) translateY(-.8rem);
+      }
+    }
     .menuSocial {
       position: relative;
       margin-top: 24rem;
@@ -52,10 +60,16 @@ and (orientation: portrait) {
     .normalText {
         padding: 0 5%;
         margin-bottom: 1rem;
-        font-size: 2.2rem;
-        line-height: 3.4rem;
+        font-size: 1.9rem;
+        line-height: 3.2rem;
     }
-
+    .hoverWork {
+      display: none;
+    }
+    .portfolioDetail {
+      width: 100vw;
+      transform: translateX(100vw);
+    }
     .portfolio-item {
       .size((100/3vw),(100/3vw));
       &:nth-last-child(1),
@@ -63,7 +77,12 @@ and (orientation: portrait) {
         width: 100/2vw;
       }
     }
-
+    .floating-label-form-group label {
+      top: 2rem;
+      height: 2.4rem;
+      line-height: 2.4rem;
+      font-size: 2rem;
+    }
     .floating-label-form-group textarea,
     .floating-label-form-group input {
       font-size: 16px;
