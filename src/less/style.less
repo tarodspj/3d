@@ -497,12 +497,6 @@ canvas {
   margin: 0 auto;
 }
 
-@media (max-width : 1300px) {
-  .portfolio-item {
-    //.size((70/2vw),(70/2vw));
-  }
-}
-
 @media (min-width : 614px) and (min-height : 460px)  {
     html {
         font-size: 6px;
@@ -548,13 +542,13 @@ canvas {
         font-size: 14px;
     }
 }
-@media (min-width : 1536px) and (min-height : 1152px) {
+@media only screen and (min-width : 1536px) and (min-height : 1152px) {
     html {
         font-size: 15px;
     }
 }
 
-@media (max-width : 1400px) {
+@media only screen and (max-width : 1400px) {
     .titleSection {
       font-size: 5.5rem;
     }
@@ -562,11 +556,9 @@ canvas {
       font-size: 2.4rem;
     }
 }
-@media (max-height : 900px) {
-  .nav-fillpath {
-    .button, .close {
+@media only screen and (max-height : 900px) {
+  .nav-fillpath .button, .nav-fillpath .close {
       transform: translateY(-30%);
-    }
   }
 }
 

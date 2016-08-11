@@ -26,6 +26,7 @@ and (orientation: portrait) {
     }
     .menuSocial {
       position: relative;
+      bottom: 7rem;
       margin-top: 24rem;
     }
     .listaMenuHorizontal {
@@ -43,10 +44,28 @@ and (orientation: portrait) {
       display: block;
       height: 9rem;
       width: 100%;
-      margin-bottom: 3rem;
+      margin-bottom: 5rem;
     }
     .titleSection {
       line-height: 9rem;
+    }
+    .section {
+      overflow: hidden;
+    }
+    #section1, #section3 {
+      padding: 0 0 10vh 0;
+    }
+    #section3 {
+      transform: rotate(0deg);
+
+    }
+    .contentTextWork {
+      overflow: hidden;
+      transform: rotate(0deg);
+      margin-bottom: 5vh;
+    }
+    .contentWork {
+      position: relative;
     }
     .contentSize {
       width: 100%;
@@ -55,27 +74,99 @@ and (orientation: portrait) {
       display: block;
       position: relative;
       top: 0;
-      transform: translateY(4vh);
+      transform: rotate(0deg);
     }
     .normalText {
         padding: 0 5%;
-        margin-bottom: 1rem;
-        font-size: 1.9rem;
-        line-height: 3.2rem;
-    }
-    .hoverWork {
-      display: none;
+        margin-bottom: 2.2rem;
+        font-size: 2.2rem;
+        line-height: 3.5rem;
     }
     .portfolioDetail {
       width: 100vw;
       transform: translateX(100vw);
     }
     .portfolio-item {
-      .size((100/3vw),(100/3vw));
+      .size(100vw, 50vw);
       &:nth-last-child(1),
       &:nth-last-child(2) {
-        width: 100/2vw;
+        .size(100vw, 50vw);
+        background-color: transparent;
+        .projectImg {
+          width: 100%;
+        }
+
       }
+      &:hover .hoverWork{
+        transform: rotate(0deg);
+      }
+    }
+    .portfolio-item:nth-child(odd) {
+      .portfolio-link {
+        float: right;
+      }
+      .hoverWork {
+        left: 0;
+        right: auto;
+      }
+    }
+    .portfolio-item:nth-child(even) {
+      .hoverWork {
+        left: auto;
+        right: 0;
+      }
+    }
+    .portfolio-link {
+      display: block;
+      width: 50vw;
+    }
+    .hoverWork {
+      left: auto;
+      right: 0;
+      bottom: 0;
+      width: 50vw;
+      height: 100%;
+      background-color: rgba(228, 227, 227, 0.89);
+    }
+    .titleWork {
+      display: block;
+      width: 100%;
+      color: @colorText1;
+      font-weight: bold;
+      text-align: center;
+
+    }
+    .awardsList {
+        width: 100%;
+        left: 0;
+        bottom: 6vh;
+        text-align: center;
+    }
+    .awardIco {
+        width: 3.3em;
+        bottom: 0;
+        float: none;
+    }
+    .portfolioDetail {
+      position: fixed;
+    }
+    .portfolioDetail, .portfolioDetailContainer {
+      height: 100vh;
+    }
+    .portfolioDetailItem {
+      height: 100%;
+    }
+    .titlePortfolioDetail {
+      margin-top: 6vh;
+    }
+    .anchorDetailPortfolio {
+      margin-top: 4vh;
+    }
+    .nav-fillpath{
+        bottom: 1.8vh;
+    }
+    .nav-fillpath .close::after, .nav-fillpath .close::before {
+      height: 3px;
     }
     .floating-label-form-group label {
       top: 2rem;

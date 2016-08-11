@@ -419,6 +419,11 @@ function followInclination() {
   console.log('movil');
 }
 
+function changeHeightWelcome() {
+  heightCanvas = window.innerHeight;
+  $('#section0').css('height', heightCanvas);
+}
+
 function detectmob() {
  if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)){
     return true;
@@ -431,6 +436,7 @@ $(document).ready(function() {
   isMob = detectmob();
   if(isMob) {
     followInclination();
+    changeHeightWelcome();
   } else {
     startThree();
     onWindowResize();
