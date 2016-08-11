@@ -41,6 +41,9 @@ body {
   text-decoration: none;
 
 }
+.cube {
+  display: none;
+}
 canvas {
   position: relative;
   top: 0;
@@ -233,6 +236,7 @@ canvas {
 
 .wrapper{
   .size(100%,auto);
+  overflow: hidden;
 }
 
 .titleSectionContainer {
@@ -583,5 +587,9 @@ canvas {
     }
   }
 }
-
-@import "movil.less";
+@media only screen
+and (max-width : 700px)
+and (orientation: portrait) {
+  @import "movil.less";
+  @import "cube.less";
+}

@@ -1,0 +1,82 @@
+
+#cube1 {
+  left: -5vw;
+  z-index: 30;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(.9);
+}
+#cube2 {
+  left: 23vw;
+  z-index: 10;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(1.2);
+}
+#cube3 {
+  right: 23vw;
+  z-index: 10;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(.7);
+}
+#cube4 {
+  right: 2vw;
+  z-index: 40;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(1);
+}
+#cube5 {
+  right: 43vw;
+  z-index: 30;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(.6);
+}
+
+#cube7 {
+  left: 17vw;
+  z-index: 21;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(.4);
+}
+#cube8 {
+  right: 9vw;
+  z-index: 30;
+  transform: rotateX(-5deg) rotateY(-5deg) scale(.5);
+}
+
+.cube {
+  width: 100px;
+  height: 400px;
+  position: absolute;
+  mix-blend-mode: multiply;
+  opacity: .7;
+  bottom: 0;
+  transform-style: preserve-3d;
+  animation: animationScale 600ms forwards ease .6s 1;
+}
+.cube div {
+  width: 100%;
+  height: 100%;
+   box-shadow: inset 0px 0px 0px 1px rgba(10, 0, 0, 0.8);
+   background: #9ac5e8;
+   opacity: .6;
+   display: block;
+   position: absolute;
+   animation: animationScale 600ms forwards ease .6s 1;
+}
+
+.cube div.right {
+   transform: rotateY(90deg);
+   margin-left: 50px;
+}
+
+.cube div.left {
+   transform: rotateY(-90deg);
+   margin-left: -50px;
+}
+
+.cube div.front {
+   transform: translateZ(50px);
+}
+
+.cube div.back {
+   transform: translateZ(-50px) rotateX(180deg);
+}
+
+@keyframes animationScale {
+  50% {
+    transform: scale(1.2);
+  }
+}

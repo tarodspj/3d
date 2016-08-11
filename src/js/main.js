@@ -416,7 +416,13 @@ function magnetSite() {
   });
 }
 function followInclination() {
-  console.log('movil');
+  var  alpha = Math.round(event.alpha),
+        beta = Math.round(event.beta),
+        gamma = Math.round(event.gamma);
+      console.log(beta);
+  $('.cube').css('transform','rotateX(' + 10 * alpha + 'deg) rotateY(' + 10 * beta + 'deg)');
+  $('.title').html(beta);
+
 }
 
 function changeHeightWelcome() {
@@ -435,7 +441,16 @@ function detectmob() {
 $(document).ready(function() {
   isMob = detectmob();
   if(isMob) {
-    followInclination();
+    if(window.DeviceMotionEvent){
+      window.ondeviceorientation = function(event) {
+        var  alpha = Math.round(event.alpha),
+              beta = Math.round(event.beta),
+              gamma = Math.round(event.gamma);
+        $('.cube').css('transform','rotateX(' + alpha + 'deg) rotateY(' + beta + 'deg)');
+        //$('.cube').css('transform','rotateX(' + 10 * alpha + 'deg)');
+        $('.title').html(beta);
+      }
+    }
     changeHeightWelcome();
   } else {
     startThree();
