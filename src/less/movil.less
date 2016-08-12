@@ -2,13 +2,24 @@
   html {
     font-size: 6px;
   }
+  .wrapper {
+    z-index: 10;
+    overflow: hidden;
+  }
     .title {
         font-size: 5rem;
         animation: animationIn 1s forwards ease-out 1.1s 1, animationLetterSpacingMov 1s forwards ease-in 1.6s 1;
     }
+    .cubeContainer {
+      .absoluteTopLeft;
+      .size;
+      overflow: hidden;
+      z-index: 10;
+    }
     .cube {
       display: block;
     }
+
     @import "cube.less";
     .menu {
       width: 100%;
@@ -53,6 +64,7 @@
     }
     .section {
       overflow: hidden;
+      z-index: 80;
     }
     #section1, #section3 {
       padding: 0 0 10vh 0;
@@ -162,13 +174,21 @@
       margin-top: 6vh;
     }
     .anchorDetailPortfolio {
-      margin-top: 4vh;
+      margin-top: 2vh;
+      font-size: 2.3rem;
+      width: 80%;
     }
     .nav-fillpath{
         bottom: 1.8vh;
     }
     .nav-fillpath .close::after, .nav-fillpath .close::before {
-      height: 3px;
+      height: 5px;
+      background-color: rgba(255,255,255,1);
+    }
+    .nav-fillpath .close {
+      position: fixed;
+      top: 14vh;
+      left: 2vw;
     }
     .floating-label-form-group label {
       top: 2rem;

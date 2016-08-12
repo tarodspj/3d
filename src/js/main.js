@@ -415,15 +415,15 @@ function magnetSite() {
     }
   });
 }
-function followInclination() {
-  var  alpha = Math.round(event.alpha),
-        beta = Math.round(event.beta),
-        gamma = Math.round(event.gamma);
-      console.log(beta);
-  $('.cube').css('transform','rotateX(' + 10 * alpha + 'deg) rotateY(' + 10 * beta + 'deg)');
-  $('.title').html(beta);
-
-}
+// function followInclination() {
+//   var  alpha = Math.round(event.alpha),
+//         beta = Math.round(event.beta),
+//         gamma = Math.round(event.gamma);
+//       console.log(beta);
+//   $('#cubeContainer').css('transform','rotateX(' + alpha + 'deg) rotateY(' + beta + 'deg) rotateZ(' + gamma + 'deg)' );
+//   //$('.title').html(beta);
+//
+// }
 
 function changeHeightWelcome() {
   heightCanvas = window.innerHeight;
@@ -431,7 +431,7 @@ function changeHeightWelcome() {
 }
 
 function detectmob() {
- if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)){
+ if( navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/webOS/i) || navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i) || navigator.userAgent.match(/BlackBerry/i) || navigator.userAgent.match(/Windows Phone/i)){
     return true;
   } else {
     return false;
@@ -444,11 +444,22 @@ $(document).ready(function() {
     if(window.DeviceMotionEvent){
       window.ondeviceorientation = function(event) {
         var  alpha = Math.round(event.alpha),
-              beta = Math.round(event.beta),
-              gamma = Math.round(event.gamma);
-        $('.cube').css('transform','rotateX(' + alpha + 'deg) rotateY(' + beta + 'deg)');
+              beta = parseInt(Math.round(event.beta) * -1),
+              gamma = parseInt(Math.round(event.gamma) * 1.2) * -1;
+        if(beta > 10){
+          beta = 10;
+        } else if (beta < -10){
+          beta = -10;
+        }
+        if(gamma > 12){
+          gamma = 12;
+        } else if (gamma < -12){
+          gamma = -12;
+        }
+
+        $('.cube').css('transform','rotateY(' + gamma + 'deg) rotateX(' + beta + 'deg)');
         //$('.cube').css('transform','rotateX(' + 10 * alpha + 'deg)');
-        $('.title').html(beta);
+        //$('.title').html(parseInt(gamma * 1) + 'Y - X' + parseInt(beta* 0.2));
       }
     }
     changeHeightWelcome();
