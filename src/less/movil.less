@@ -190,11 +190,19 @@
       top: 14vh;
       left: 2vw;
     }
-    .floating-label-form-group label {
+
+    .floating-label-form-group{
+      label {
       top: 2rem;
       height: 2.4rem;
       line-height: 2.4rem;
       font-size: 2rem;
+      }
+      &.floating-label-form-group-with-focus label,
+      &.floating-label-form-group-with-value label {
+        top: 0;
+      }
+
     }
     .floating-label-form-group textarea,
     .floating-label-form-group input {
