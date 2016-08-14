@@ -1,0 +1,12 @@
+
+
+- Cargar las imagenes no SVG después del document ready
+- Separar bien el CSS en:
+      · Base 'para movil tablet y desktop' todo lo que no esta en una mediaQuery
+      · No movil 'desktop y tablet' ?
+      · No desktop 'tablet y movil' ?
+      · movil
+      · tablet
+      · desktop
+      · assets
+- Usar require.js
