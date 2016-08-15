@@ -424,6 +424,22 @@ function magnetSite() {
 //   //$('.title').html(beta);
 //
 // }
+function loadHeavyImgs() {
+  var arrayImgs = [
+    'futbolMemoriesPoster',
+    'bannerSeatPoster',
+    'sprayeahPoster',
+    'newsletterPoster',
+    'missingPoster',
+    'eurocupPoster',
+    'mailgeneratorPoster',
+    'cupraPoster'
+  ];
+
+  $('#portfolioDetailContainer .thumbnailWork img').each(function (index, value){
+    console.log($(this).attr('src', 'img/portfolio/' + arrayImgs[index] + '.jpg'));
+  });
+}
 
 function changeHeightWelcome() {
   heightCanvas = window.innerHeight;
@@ -468,7 +484,7 @@ $(document).ready(function() {
     onWindowResize();
     magnetSite();
   }
-  console.log(isMob);
 
   listeners();
+  loadHeavyImgs();
 });
