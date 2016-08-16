@@ -1,0 +1,73 @@
+
+#cube1 {
+  bottom: -10vh;
+  left: -5vw;
+  color: #d1e6f9;
+  z-index: 30;
+}
+#cube3 {
+  bottom: -15vh;
+  right: 23vw;
+  color: #e11218;
+  z-index: 10;
+}
+#cube4 {
+  bottom: -4vh;
+  right: 2vw;
+  color: #7a7e83;
+  z-index: 40;
+}
+#cube5 {
+  bottom: -41vh;
+  right: 39vw;
+  color: #7a7e83;
+  z-index: 50;
+}
+
+#cube7 {
+  bottom: -1vh;
+  left: 17vw;
+  color: #d1e6f9;
+  z-index: 21;
+}
+
+
+.cube {
+  //.size(100px, 400px);
+  width: 32vw;
+  height: 61vh;
+  position: absolute;
+  //mix-blend-mode: multiply;
+  bottom: 0;
+  transform-style: preserve-3d;
+  transition: transform 40ms ease;
+}
+.cube div {
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  //box-shadow: inset 0px 0px 0px 1px rgba(10, 0, 0, 0.1);
+  box-shadow: inset 0px 0px 0px 1px currentColor;
+  background-color: currentColor;
+  opacity: .5;
+  display: block;
+  position: absolute;
+}
+
+.cube div.right {
+   transform: rotateY(90deg);
+   margin-left: 50px;
+}
+
+.cube div.left {
+   transform: rotateY(-90deg);
+   margin-left: -50px;
+}
+
+.cube div.front {
+   transform: translateZ(50px);
+}
+
+.cube div.back {
+   transform: translateZ(-50px) rotateX(180deg);
+}
