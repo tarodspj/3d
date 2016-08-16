@@ -1,6 +1,9 @@
 
 
-- Cargar las imagenes no SVG después del document ready
+- En el ordenador de Polo no se ve bien el works, posiblemente se este mezclando 100% con vm
+
+- Usar require.js
+
 - Separar bien el CSS en:
       · Base 'para movil tablet y desktop' todo lo que no esta en una mediaQuery
       · No movil 'desktop y tablet' ?
@@ -9,4 +12,5 @@
       · tablet
       · desktop
       · assets
-- Usar require.js
+
+/ Cargar las imagenes no SVG después del document ready
