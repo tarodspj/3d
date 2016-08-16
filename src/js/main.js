@@ -1,8 +1,7 @@
 var animationJs, widthCanvas, heightCanvas, actualSection = 0,
 actualSectionName = 'section0',
 controlScroll = true,
-onMovement = false,
-isMob = false;
+onMovement = false;
 
 var rtime = 0,
     timeout = false,
@@ -163,10 +162,7 @@ function onWindowResize() {
   //$('#section0').css({'width': widthCanvas + 'px', 'height': heightCanvas + 'px'});
   $('.section').css({'height': heightCanvas + 'px'});
 
-  //controlScroll = false;
-  if(!isMob) {
     goesTo(actualSectionName);
-  }
 }
 
 function toggleMenu() {

@@ -68,6 +68,7 @@ gulp.task('dev', function(callback){
     destino = Ruta.dev;
     orderToJs = orderToJsDev;
     runSequence(['less', 'html', 'image-min', 'copy-svg', 'copy-php'], 'concat-scripts', 'minify-js', callback);
+    runSequence(['less', 'html', 'image-min', 'copy-svg', 'copy-php'], 'concat-scripts', 'minify-js', 'watch', callback);
     //runSequence(['less', 'html', 'image-min', 'copy-svg'], 'concat-scripts', 'minify-js', callback);
     //runSequence(['css', 'html', 'copyfonts', 'image-min'], callback);
     //runSequence(['css', 'html', 'concat-scripts', 'minify-js', 'image-min'], callback);
