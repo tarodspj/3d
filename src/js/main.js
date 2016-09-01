@@ -202,7 +202,7 @@ function onScroll() {
   camera.position.y = 3 - ($scrollTop / 300);
   var cuantoScroll = actualScroll - (actualSection * heightCanvas),
     destination = '';
-    console.log(Math.abs(cuantoScroll) + ' scroll' );
+    //console.log(Math.abs(cuantoScroll) + ' scroll' );
   if (controlScroll === true && (Math.abs(cuantoScroll) > 20)) {
     controlScroll = false;
 
@@ -281,7 +281,7 @@ function validateForm() {
          message = $("textarea#message").val();
 
     $.ajax({
-       url: "././mail/contact_me.php",
+       url: "mail/contact_me.php",
        type: "POST",
        data: {
            name: name,
@@ -433,13 +433,17 @@ function loadHeavyImgs() {
   ];
 
   $('#portfolioDetailContainer .thumbnailWork img').each(function (index, value){
-    console.log($(this).attr('src', 'img/portfolio/' + arrayImgs[index] + '.jpg'));
+    $(this).attr('src', 'img/portfolio/' + arrayImgs[index] + '.jpg');
   });
 }
 
 function changeHeightWelcome() {
   heightCanvas = window.innerHeight;
   $('#section0').css('height', heightCanvas);
+}
+
+function changeCtaBanners() {
+  $('#bannersCta').attr('href', 'bannersMov.html');
 }
 
 function detectmob() {
@@ -470,11 +474,10 @@ $(document).ready(function() {
         }
 
         $('.cube').css('transform','rotateY(' + gamma + 'deg) rotateX(' + beta + 'deg)');
-        //$('.cube').css('transform','rotateX(' + 10 * alpha + 'deg)');
-        //$('.title').html(parseInt(gamma * 1) + 'Y - X' + parseInt(beta* 0.2));
       }
     }
     changeHeightWelcome();
+    changeCtaBanners();
   } else {
     startThree();
     onWindowResize();
